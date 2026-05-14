@@ -7,254 +7,284 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-        
+        * { font-family: 'Inter', sans-serif; }
         body {
             background-color: #F8F6F0;
-            background-image: 
-                repeating-linear-gradient(
-                    45deg,
-                    transparent,
-                    transparent 35px,
-                    rgba(15, 61, 46, 0.02) 35px,
-                    rgba(15, 61, 46, 0.02) 70px
-                );
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(15, 61, 46, 0.02) 35px, rgba(15, 61, 46, 0.02) 70px);
         }
-        
-        .boreal-logo {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #0F3D2E;
-            letter-spacing: -0.02em;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-        
-        .slide-up {
-            animation: slideUp 0.5s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .upload-zone {
-            border: 3px dashed #5AB8A8;
-            transition: all 0.3s ease;
-        }
-        
-        .upload-zone:hover {
-            border-color: #0F3D2E;
-            background-color: rgba(90, 184, 168, 0.05);
-            transform: scale(1.02);
-        }
-        
-        .status-line {
-            opacity: 0.3;
-            transition: all 0.5s ease;
-        }
-        
-        .status-line.active {
-            opacity: 1;
-        }
-        
-        .btn-primary {
-            background-color: #0F3D2E;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            background-color: #1a5a43;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(15, 61, 46, 0.2);
-        }
-        
-        .btn-secondary {
-            background-color: #5AB8A8;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #4a9d8f;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(90, 184, 168, 0.2);
-        }
-        
-        .lang-toggle {
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            transition: all 0.2s ease;
-        }
-        
-        .lang-toggle.active {
-            background-color: #0F3D2E;
-            color: white;
-        }
-        
-        .lang-toggle:not(.active) {
-            color: #0F3D2E;
-            opacity: 0.5;
-        }
-        
-        .lang-toggle:not(.active):hover {
-            opacity: 1;
-            background-color: rgba(15, 61, 46, 0.1);
-        }
-        
-        .gap-card {
-            transition: all 0.3s ease;
-        }
-        
-        .gap-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
+        .boreal-logo { font-size: 3rem; font-weight: 700; color: #0F3D2E; letter-spacing: -0.02em; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        .slide-up { animation: slideUp 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .entry-card { border: 2px solid #E5E0D0; transition: all 0.3s ease; cursor: pointer; }
+        .entry-card:hover { border-color: #5AB8A8; transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15, 61, 46, 0.12); }
+        .upload-zone { border: 3px dashed #5AB8A8; transition: all 0.3s ease; }
+        .upload-zone:hover { border-color: #0F3D2E; background-color: rgba(90, 184, 168, 0.05); transform: scale(1.02); }
+        .status-line { opacity: 0.3; transition: all 0.5s ease; }
+        .status-line.active { opacity: 1; }
+        .btn-primary { background-color: #0F3D2E; color: white; transition: all 0.3s ease; }
+        .btn-primary:hover { background-color: #1A5A45; transform: translateY(-2px); }
+        .btn-secondary { background-color: white; color: #0F3D2E; border: 2px solid #0F3D2E; transition: all 0.3s ease; }
+        .btn-secondary:hover { background-color: #0F3D2E; color: white; }
+        .btn-tertiary { background-color: transparent; color: #555; border: 1px solid #CCC; transition: all 0.2s ease; }
+        .btn-tertiary:hover { border-color: #5AB8A8; color: #0F3D2E; }
+        .gap-card { transition: all 0.3s ease; }
+        .gap-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
+        .lang-toggle { cursor: pointer; padding: 6px 14px; border-radius: 6px; transition: all 0.2s; }
+        .lang-toggle.active { background-color: #0F3D2E; color: white; }
+        .loading-dot { animation: pulse 1.5s infinite; color: #5AB8A8; }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .scenario-chip { background-color: #F2EEDF; border: 1px solid #D4CFB8; transition: all 0.2s ease; cursor: pointer; }
+        .scenario-chip:hover { background-color: #E8E2C8; border-color: #5AB8A8; }
+        .claim-section { border-left: 4px solid #5AB8A8; padding-left: 16px; }
+        .claim-section.fault { border-left-color: #D97757; }
+        .claim-section.next-steps { border-left-color: #0F3D2E; }
+        .checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; }
+        .checklist-icon { color: #5AB8A8; font-weight: bold; margin-top: 2px; }
+        .checklist-icon.warning { color: #D97757; }
+        textarea { font-family: 'Inter', sans-serif; resize: none; }
+        textarea:focus { outline: none; border-color: #5AB8A8; box-shadow: 0 0 0 3px rgba(90, 184, 168, 0.15); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
-    <!-- Language Toggle (Fixed Top Right) -->
-    <div class="fixed top-6 right-6 z-50 flex gap-2 bg-white rounded-xl shadow-lg p-1">
-        <div class="lang-toggle active" data-lang="en" onclick="switchLanguage('en')">EN</div>
-        <div class="lang-toggle" data-lang="fr" onclick="switchLanguage('fr')">FR</div>
-    </div>
+    <header class="border-b border-gray-200 bg-white/80 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl font-bold" style="color: #0F3D2E;">Boréal</span>
+                <span class="text-xs text-gray-500 hidden sm:inline" id="footer-text"></span>
+            </div>
+            <div class="flex gap-1 bg-gray-100 rounded-lg p-1">
+                <span class="lang-toggle active" data-lang="en" onclick="switchLanguage('en')">EN</span>
+                <span class="lang-toggle" data-lang="fr" onclick="switchLanguage('fr')">FR</span>
+            </div>
+        </div>
+    </header>
 
-    <!-- Main Content Container -->
-    <div id="app" class="flex-1 flex items-center justify-center p-6">
-        <!-- Screens will be injected here -->
-    </div>
+    <div id="app" class="flex-1 flex items-center justify-center p-6"></div>
 
-    <!-- Footer -->
-    <footer class="text-center py-6 text-sm text-gray-500">
-        <span data-i18n="footer">Built on IBM Bob</span>
+    <footer class="border-t border-gray-200 bg-white/60">
+        <div class="max-w-7xl mx-auto px-6 py-3 text-center text-xs text-gray-500">
+            <span id="footer-text-bottom"></span>
+        </div>
     </footer>
 
     <script>
-        // State Management
         let currentScreen = 1;
         let currentLanguage = 'en';
         let currentQuestion = 1;
-        let answers = {
-            dependents: null,
-            homeowner: null,
-            commute: null
-        };
+        let answers = { dependents: null, homeowner: null, commute: null };
+        let claimDescription = '';
+        let selectedScenario = 'rear-end';
 
-        // Translations
         const translations = {
             en: {
                 footer: 'Built on IBM Bob',
-                // Screen 1
-                tagline: 'Read your policy. Know your gaps. In your language.',
-                uploadText: 'Drop your auto insurance policy here',
-                uploadSubtext: 'or click to browse',
-                // Screen 2
+                tagline: 'Read your policy. Know your gaps. Get post-loss guidance. In your language.',
+                entryPolicyTitle: 'Review my policy',
+                entryPolicyDesc: 'Upload your auto policy. Boréal reads it, finds gaps, and gives you questions to ask your broker.',
+                entryClaimTitle: 'I just had an accident',
+                entryClaimDesc: 'Tell Boréal what happened. Get preliminary fault assessment, coverage path, and a step-by-step checklist for the next 24 hours.',
                 triageAgent: 'Triage Agent: detecting language and province...',
                 triageComplete: 'Ontario, English',
                 policyReader: 'Policy Reader Agent: extracting coverage...',
-                policyComplete: '6 pages parsed',
+                policyComplete: '3 pages parsed',
                 readyAnalysis: 'Ready for analysis',
-                // Screen 3
                 policyGlance: 'Your Policy at a Glance',
                 liability: 'Liability',
+                accidentBenefits: 'Accident Benefits',
+                standard: 'Standard',
                 collision: 'Collision',
                 comprehensive: 'Comprehensive',
                 deductible: 'deductible',
                 opcf20: 'OPCF 20 (Transportation Replacement)',
+                opcf39: 'OPCF 39 (Accident Waiver)',
                 opcf44: 'OPCF 44R (Family Protection)',
                 yes: 'Yes',
                 no: 'No',
                 checkGaps: 'Check my coverage gaps →',
-                // Screen 4
                 q1: 'Do you have dependents?',
                 q2: 'Do you own your home?',
                 q3: "What's your daily commute?",
                 urban: 'Urban',
                 suburban: 'Suburban',
                 highway: 'Highway',
-                // Screen 5
                 gapReport: 'Coverage Gap Analysis',
                 covered: 'COVERED',
                 underProtected: 'UNDER-PROTECTED',
                 considerAdding: 'CONSIDER ADDING',
                 collisionOk: 'Collision: $500 deductible looks appropriate',
                 comprehensiveOk: 'Comprehensive: $300 deductible is reasonable',
+                opcf20Ok: 'OPCF 20: rental coverage if your car is in the shop',
                 liabilityTitle: 'Liability: $1,000,000',
                 liabilityConcern: 'Concern: Light for homeowners with dependents. Most advisors recommend $2M.',
                 liabilityQuestion: 'Question for your broker: "Can we increase liability to $2M and what\'s the cost?"',
+                abTitle: 'Accident Benefits: Standard',
+                abConcern: 'Concern: Standard caps income replacement at $400/wk. With 2 dependents, Enhanced AB raises this and adds caregiver benefits.',
+                abQuestion: 'Question for your broker: "What\'s the cost difference between Standard and Enhanced Accident Benefits?"',
                 opcf44Title: 'OPCF 44R (Family Protection)',
-                opcf44Why: 'Why: Highway commute exposes you to underinsured drivers. This endorsement protects you.',
+                opcf44Why: 'Why: Highway commute exposes you to underinsured drivers. This endorsement protects you if you\'re hit by someone with low/no coverage.',
                 opcf44Question: 'Question for your broker: "What does it cost to add OPCF 44R to my policy?"',
-                disclaimer: 'Educational guidance only. Not a quote. Not legal advice. Consult your broker for purchasing decisions.'
+                disclaimer: 'Educational guidance only. Not a quote. Not legal advice. Consult your broker for purchasing decisions.',
+                claimIntakeTitle: 'Tell Boréal what happened',
+                claimIntakeSubtitle: 'A few sentences are enough. Just the facts — when, where, how. Boréal will help from there.',
+                claimPlaceholder: 'Example: "Yesterday around 5 PM I was stopped at a red light on Bank Street when another driver rear-ended me. No injuries, but my rear bumper is dented. I have the other driver\'s info."',
+                claimAnalyze: 'Get guidance →',
+                claimScenarioLabel: 'Or pick a common scenario:',
+                scenario1: 'I rear-ended someone at a red light',
+                scenario2: 'Someone hit me and drove off (hit-and-run)',
+                scenario3: 'My car was vandalized in a parking lot',
+                claimBack: '← Back',
+                triageClaim: 'Triage Agent: classifying loss type...',
+                triageClaimComplete: 'Collision, English, Ontario',
+                claimPrepAgent: 'Claim Prep Agent: applying Ontario FDR principles...',
+                claimPrepComplete: 'Fault assessment + coverage path ready',
+                readyClaim: 'Building your action checklist',
+                claimRecTitle: 'Your Boréal Claim Guidance',
+                whatHappened: "What I'm understanding",
+                lossType: 'Loss type:',
+                lossRearEnd: 'Rear-end collision (you struck another vehicle)',
+                lossHitRun: 'Hit-and-run (struck by unknown driver)',
+                lossVandalism: 'Vandalism (parking-lot incident)',
+                faultAssessment: 'Preliminary fault assessment',
+                faultRearEnd: 'In Ontario, the following driver in a rear-end collision is typically considered 100% at fault, regardless of whether the lead vehicle stopped suddenly. The exception is if the lead vehicle was reversing.',
+                faultHitRun: 'You are not at fault. The coverage path depends on whether the other vehicle can be identified.',
+                faultVandalism: 'No driver fault — this is a Comprehensive coverage scenario.',
+                faultDisclaimer: "This is preliminary. Your insurer makes the official determination using Ontario's Fault Determination Rules. They have access to police reports and the other driver's statement — you don't yet.",
+                coverageApplies: 'Which coverage likely applies',
+                coverageRearEnd: 'Primary path: Section C — Collision. Your $500 deductible applies. OPCF 39 (Accident Waiver) is on your policy, so this may not affect premium at renewal.',
+                coverageHitRun: 'Primary path: DCPD (Direct Compensation) if the other vehicle is identified. Otherwise Uninsured Automobile Coverage. No deductible applies under Section E.',
+                coverageVandalism: 'Primary path: Comprehensive coverage. Your $300 deductible applies.',
+                nextSteps: 'Your next 24 hours',
+                stepRightNow: 'Right now',
+                stepRightNow1: 'Take photos: all 4 corners of both vehicles, license plates, damage close-ups, road and intersection',
+                stepRightNow2: "Exchange info with the other driver: name, license, insurer, policy number, phone",
+                stepRightNow3: 'Get name + phone of any witnesses',
+                stepRightNowWarn: 'Do NOT admit fault or apologize for the accident. "I\'m sorry" is an admission.',
+                stepWithin24h: 'Within 24 hours',
+                stepWithin24h1: "Call your insurer's claims line (24/7). Have your policy number, the other driver's info, photos, and accident time/location ready.",
+                stepWithin24h2: 'If damage > $2,000 or any injuries: report to a Collision Reporting Centre (Ontario requirement).',
+                stepWithin24h3: 'See a doctor if you feel any pain or discomfort, even if minor.',
+                stepThisWeek: 'This week',
+                stepThisWeek1: "Get a claim number — you'll need it for every follow-up",
+                stepThisWeek2: "Get your adjuster's direct contact",
+                stepThisWeek3: 'Ask about a rental vehicle (you have OPCF 20)',
+                stepThisWeek4: 'Keep every receipt: medical, towing, rental, repair',
+                smartQuestions: 'Smart questions to ask your adjuster',
+                question1: '"What\'s my deductible for this claim?"',
+                question2: '"Will this affect my premium at renewal? Does OPCF 39 apply?"',
+                question3: '"How many rental days am I covered for under OPCF 20?"',
+                question4: '"What\'s the expected timeline for the claim decision?"',
+                claimDisclaimer: 'Boréal provides educational guidance only. This is not a quote, legal advice, or a substitute for a licensed broker or lawyer. Your insurer makes all final claim decisions.',
+                startOver: '← Start over'
             },
             fr: {
                 footer: 'Propulsé par IBM Bob',
-                // Screen 1
-                tagline: 'Lisez votre police. Connaissez vos écarts. Dans votre langue.',
-                uploadText: 'Déposez votre police d\'assurance auto ici',
-                uploadSubtext: 'ou cliquez pour parcourir',
-                // Screen 2
+                tagline: "Lisez votre police. Connaissez vos écarts. Recevez des conseils après sinistre. Dans votre langue.",
+                entryPolicyTitle: 'Examiner ma police',
+                entryPolicyDesc: "Téléversez votre police auto. Boréal la lit, trouve les écarts et vous donne les bonnes questions à poser à votre courtier.",
+                entryClaimTitle: "Je viens d'avoir un accident",
+                entryClaimDesc: "Racontez à Boréal ce qui s'est passé. Obtenez une évaluation préliminaire de la responsabilité, la garantie applicable et une liste d'étapes pour les 24 prochaines heures.",
                 triageAgent: 'Agent de triage : détection de la langue et de la province...',
                 triageComplete: 'Ontario, anglais',
-                policyReader: 'Agent de lecture : extraction de la couverture...',
-                policyComplete: '6 pages analysées',
-                readyAnalysis: 'Prêt pour l\'analyse',
-                // Screen 3
-                policyGlance: 'Votre police en un coup d\'œil',
+                policyReader: 'Agent de lecture : extraction de la garantie...',
+                policyComplete: '3 pages analysées',
+                readyAnalysis: "Prêt pour l'analyse",
+                policyGlance: "Votre police en un coup d'œil",
                 liability: 'Responsabilité civile',
+                accidentBenefits: "Indemnités d'accident",
+                standard: 'Standard',
                 collision: 'Collision',
-                comprehensive: 'Tous risques',
+                comprehensive: 'Risques multiples',
                 deductible: 'de franchise',
-                opcf20: 'Avenant OPCF 20 (Remplacement de véhicule)',
+                opcf20: 'Avenant FPQ n° 20 (Frais de transport de remplacement)',
+                opcf39: 'Avenant FPQ n° 39 (Renonciation à la majoration)',
                 opcf44: 'Avenant FPQ n° 44R (Protection familiale)',
                 yes: 'Oui',
                 no: 'Non',
-                checkGaps: 'Vérifier mes écarts de couverture →',
-                // Screen 4
-                q1: 'Avez-vous des personnes à charge?',
-                q2: 'Êtes-vous propriétaire de votre maison?',
-                q3: 'Quel est votre trajet quotidien?',
+                checkGaps: 'Vérifier mes écarts de garantie →',
+                q1: 'Avez-vous des personnes à charge ?',
+                q2: 'Êtes-vous propriétaire de votre maison ?',
+                q3: 'Quel est votre trajet quotidien ?',
                 urban: 'Urbain',
                 suburban: 'Banlieue',
                 highway: 'Autoroute',
-                // Screen 5
-                gapReport: 'Analyse des écarts de couverture',
-                covered: 'COUVERT',
+                gapReport: 'Analyse des écarts de garantie',
+                covered: 'BIEN COUVERT',
                 underProtected: 'SOUS-PROTÉGÉ',
                 considerAdding: 'À CONSIDÉRER',
                 collisionOk: 'Collision : franchise de 500 $ appropriée',
-                comprehensiveOk: 'Tous risques : franchise de 300 $ raisonnable',
+                comprehensiveOk: 'Risques multiples : franchise de 300 $ raisonnable',
+                opcf20Ok: "Avenant 20 : véhicule de remplacement en cas de sinistre couvert",
                 liabilityTitle: 'Responsabilité civile : 1 000 000 $',
                 liabilityConcern: 'Préoccupation : Léger pour les propriétaires avec personnes à charge. La plupart des conseillers recommandent 2 000 000 $.',
-                liabilityQuestion: 'Question pour votre courtier : « Pouvons-nous augmenter la responsabilité à 2 000 000 $ et quel est le coût? »',
+                liabilityQuestion: 'Question pour votre courtier : « Pouvons-nous augmenter la responsabilité à 2 000 000 $, et quel est le coût ? »',
+                abTitle: "Indemnités d'accident : niveau Standard",
+                abConcern: "Préoccupation : Le niveau Standard plafonne le remplacement de revenu à 400 $/sem. Avec 2 personnes à charge, les Indemnités bonifiées augmentent ce montant et ajoutent des prestations d'aidant.",
+                abQuestion: 'Question pour votre courtier : « Quelle est la différence de coût entre les Indemnités Standard et les Bonifiées ? »',
                 opcf44Title: 'Avenant FPQ n° 44R (Protection familiale)',
-                opcf44Why: 'Pourquoi : Les trajets sur autoroute vous exposent aux conducteurs sous-assurés. Cet avenant vous protège.',
-                opcf44Question: 'Question pour votre courtier : « Combien coûte l\'ajout de l\'avenant FPQ n° 44R à ma police? »',
-                disclaimer: 'Conseils éducatifs uniquement. Ceci n\'est ni une soumission, ni un avis juridique. Consultez votre courtier pour toute décision d\'achat.'
+                opcf44Why: 'Pourquoi : Les trajets sur autoroute vous exposent à des conducteurs sous-assurés. Cet avenant vous protège si vous êtes frappé par quelqu\'un avec peu ou pas de garantie.',
+                opcf44Question: "Question pour votre courtier : « Combien coûte l'ajout de l'avenant FPQ n° 44R à ma police ? »",
+                disclaimer: "Conseils éducatifs uniquement. Ceci n'est ni une soumission, ni un avis juridique. Consultez votre courtier pour toute décision d'achat.",
+                claimIntakeTitle: "Racontez à Boréal ce qui s'est passé",
+                claimIntakeSubtitle: 'Quelques phrases suffisent. Les faits — quand, où, comment. Boréal prend le relais.',
+                claimPlaceholder: "Exemple : « Hier vers 17 h, j'étais arrêté à un feu rouge sur la rue Bank quand un autre conducteur m'a heurté par l'arrière. Pas de blessure, mais mon pare-chocs arrière est cabossé. J'ai les coordonnées de l'autre conducteur. »",
+                claimAnalyze: 'Obtenir des conseils →',
+                claimScenarioLabel: 'Ou choisissez un scénario courant :',
+                scenario1: "J'ai heurté quelqu'un par l'arrière à un feu rouge",
+                scenario2: "Quelqu'un m'a frappé et a pris la fuite",
+                scenario3: 'Mon véhicule a été vandalisé dans un stationnement',
+                claimBack: '← Retour',
+                triageClaim: 'Agent de triage : classification du sinistre...',
+                triageClaimComplete: 'Collision, français, Ontario',
+                claimPrepAgent: 'Agent de réclamation : application des Règles de détermination de la responsabilité...',
+                claimPrepComplete: 'Évaluation de la responsabilité + garantie applicable prêtes',
+                readyClaim: "Préparation de votre liste d'actions",
+                claimRecTitle: 'Vos conseils Boréal pour la réclamation',
+                whatHappened: 'Ce que je comprends',
+                lossType: 'Type de sinistre :',
+                lossRearEnd: 'Collision arrière (vous avez heurté un autre véhicule)',
+                lossHitRun: 'Délit de fuite (heurté par un conducteur inconnu)',
+                lossVandalism: 'Vandalisme (incident en stationnement)',
+                faultAssessment: 'Évaluation préliminaire de la responsabilité',
+                faultRearEnd: "En Ontario, le conducteur arrière dans une collision par l'arrière est généralement considéré 100 % responsable, peu importe si le véhicule avant s'est arrêté brusquement. L'exception est si le véhicule avant reculait.",
+                faultHitRun: "Vous n'êtes pas responsable. La garantie applicable dépend de la possibilité d'identifier l'autre véhicule.",
+                faultVandalism: "Aucune responsabilité du conducteur — il s'agit d'un scénario de garantie Risques multiples.",
+                faultDisclaimer: "Ceci est préliminaire. Votre assureur fait la détermination officielle en utilisant les Règles de détermination de la responsabilité de l'Ontario. Ils ont accès aux rapports de police et à la déclaration de l'autre conducteur — pas vous, pour l'instant.",
+                coverageApplies: "Quelle garantie s'applique probablement",
+                coverageRearEnd: "Garantie principale : Section C — Collision. Votre franchise de 500 $ s'applique. L'avenant FPQ n° 39 (Renonciation à la majoration) est sur votre police, donc votre prime ne devrait pas être affectée au renouvellement.",
+                coverageHitRun: "Garantie principale : IDDM (Indemnisation directe pour dommages matériels) si l'autre véhicule est identifié. Sinon, garantie des véhicules non assurés. Aucune franchise sous la Section E.",
+                coverageVandalism: "Garantie principale : Risques multiples. Votre franchise de 300 $ s'applique.",
+                nextSteps: 'Vos 24 prochaines heures',
+                stepRightNow: 'Tout de suite',
+                stepRightNow1: 'Prenez des photos : 4 coins des deux véhicules, plaques, gros plans des dommages, route et intersection',
+                stepRightNow2: "Échangez les informations avec l'autre conducteur : nom, permis, assureur, n° de police, téléphone",
+                stepRightNow3: 'Notez le nom + téléphone de tout témoin',
+                stepRightNowWarn: "N'admettez PAS la responsabilité et ne vous excusez pas pour l'accident. « Je suis désolé » est un aveu.",
+                stepWithin24h: 'Dans les 24 heures',
+                stepWithin24h1: "Appelez la ligne de réclamations de votre assureur (24/7). Ayez votre n° de police, les informations de l'autre conducteur, les photos et l'heure/lieu de l'accident prêts.",
+                stepWithin24h2: 'Si dommages > 2 000 $ ou blessures : déclarez à un Centre de déclaration des collisions (exigence ontarienne).',
+                stepWithin24h3: 'Consultez un médecin si vous ressentez la moindre douleur, même mineure.',
+                stepThisWeek: 'Cette semaine',
+                stepThisWeek1: "Obtenez un numéro de réclamation — vous en aurez besoin pour chaque suivi",
+                stepThisWeek2: 'Obtenez les coordonnées directes de votre expert en sinistre',
+                stepThisWeek3: "Renseignez-vous sur un véhicule de remplacement (vous avez l'avenant FPQ n° 20)",
+                stepThisWeek4: 'Conservez tous les reçus : médical, remorquage, location, réparation',
+                smartQuestions: 'Questions intelligentes à poser à votre expert',
+                question1: '« Quelle est ma franchise pour cette réclamation ? »',
+                question2: "« Est-ce que cela affectera ma prime au renouvellement ? L'avenant FPQ n° 39 s'applique-t-il ? »",
+                question3: "« Combien de jours de location suis-je couvert sous l'avenant FPQ n° 20 ? »",
+                question4: '« Quel est le délai prévu pour la décision sur la réclamation ? »',
+                claimDisclaimer: "Boréal offre des conseils éducatifs uniquement. Ceci n'est ni une soumission, ni un avis juridique, ni un substitut à un courtier licencié ou un avocat. Votre assureur prend toutes les décisions finales sur la réclamation.",
+                startOver: '← Recommencer'
             }
         };
 
-        function t(key) {
-            return translations[currentLanguage][key] || key;
+        function t(key) { return translations[currentLanguage][key] || key; }
+
+        function updateChrome() {
+            document.getElementById('footer-text').textContent = t('footer');
+            document.getElementById('footer-text-bottom').textContent = t('footer');
         }
 
         function switchLanguage(lang) {
@@ -262,185 +292,152 @@
             document.querySelectorAll('.lang-toggle').forEach(toggle => {
                 toggle.classList.toggle('active', toggle.dataset.lang === lang);
             });
+            updateChrome();
             renderScreen(currentScreen);
+        }
+
+        function selectScenario(scenario) {
+            selectedScenario = scenario;
+            if (scenario === 'rear-end') claimDescription = t('scenario1');
+            else if (scenario === 'hit-run') claimDescription = t('scenario2');
+            else if (scenario === 'vandalism') claimDescription = t('scenario3');
+            renderScreen(7);
+        }
+
+        function startClaimFlow() {
+            const textarea = document.getElementById('claim-textarea');
+            const text = textarea ? textarea.value.trim() : '';
+            claimDescription = text;
+            const lower = text.toLowerCase();
+            if (lower.includes('rear') || lower.includes('arrière') || lower.includes('feu') || lower.includes('red light')) {
+                selectedScenario = 'rear-end';
+            } else if ((lower.includes('hit') && (lower.includes('run') || lower.includes('flee') || lower.includes('drove off'))) || lower.includes('fuite') || lower.includes('hit-and-run')) {
+                selectedScenario = 'hit-run';
+            } else if (lower.includes('vandal') || lower.includes('keyed') || lower.includes('parking')) {
+                selectedScenario = 'vandalism';
+            } else {
+                selectedScenario = 'rear-end';
+            }
+            renderScreen(7);
+        }
+
+        function resetApp() {
+            currentScreen = 1;
+            currentQuestion = 1;
+            answers = { dependents: null, homeowner: null, commute: null };
+            claimDescription = '';
+            selectedScenario = 'rear-end';
+            renderScreen(1);
         }
 
         function renderScreen(screenNum) {
             currentScreen = screenNum;
             const app = document.getElementById('app');
-            
+
             switch(screenNum) {
                 case 1:
                     app.innerHTML = `
-                        <div class="max-w-2xl w-full text-center fade-in">
+                        <div class="max-w-4xl w-full text-center fade-in">
                             <div class="boreal-logo mb-4">Boréal</div>
-                            <p class="text-xl text-gray-600 mb-12" data-i18n="tagline">${t('tagline')}</p>
-                            <div class="upload-zone bg-white rounded-2xl p-16 cursor-pointer" onclick="renderScreen(2)">
-                                <svg class="w-20 h-20 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                                </svg>
-                                <p class="text-lg font-medium text-gray-700 mb-2">${t('uploadText')}</p>
-                                <p class="text-sm text-gray-500">${t('uploadSubtext')}</p>
+                            <p class="text-xl text-gray-600 mb-10">${t('tagline')}</p>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="entry-card bg-white rounded-2xl p-8 text-left" onclick="renderScreen(2)">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background-color: #E6F2EE;">
+                                            <svg class="w-7 h-7" style="color: #0F3D2E;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                            </svg>
+                                        </div>
+                                        <h2 class="text-xl font-bold" style="color: #0F3D2E;">${t('entryPolicyTitle')}</h2>
+                                    </div>
+                                    <p class="text-gray-600 text-sm leading-relaxed">${t('entryPolicyDesc')}</p>
+                                </div>
+                                <div class="entry-card bg-white rounded-2xl p-8 text-left" onclick="renderScreen(6)">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background-color: #FBEEE6;">
+                                            <svg class="w-7 h-7" style="color: #D97757;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                            </svg>
+                                        </div>
+                                        <h2 class="text-xl font-bold" style="color: #0F3D2E;">${t('entryClaimTitle')}</h2>
+                                    </div>
+                                    <p class="text-gray-600 text-sm leading-relaxed">${t('entryClaimDesc')}</p>
+                                </div>
                             </div>
                         </div>
                     `;
                     break;
-                    
+
                 case 2:
-                    app.innerHTML = `
-                        <div class="max-w-2xl w-full fade-in">
-                            <div class="bg-white rounded-2xl shadow-xl p-8">
-                                <div class="space-y-6">
-                                    <div class="status-line" id="status1">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                                                <span class="loading-dot">●</span>
-                                            </div>
-                                            <span class="text-gray-600">${t('triageAgent')}</span>
-                                        </div>
-                                    </div>
-                                    <div class="status-line" id="status2">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                                                <span class="loading-dot">●</span>
-                                            </div>
-                                            <span class="text-gray-600">${t('policyReader')}</span>
-                                        </div>
-                                    </div>
-                                    <div class="status-line" id="status3">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                                                <span class="loading-dot">●</span>
-                                            </div>
-                                            <span class="text-gray-600">${t('readyAnalysis')}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    
-                    // Animate status lines
-                    setTimeout(() => {
-                        const status1 = document.getElementById('status1');
-                        status1.classList.add('active');
-                        status1.innerHTML = `
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
-                                    <span class="text-white">✓</span>
-                                </div>
-                                <span class="text-gray-900 font-medium">${t('triageAgent')} <span class="text-green-600">✓ ${t('triageComplete')}</span></span>
-                            </div>
-                        `;
-                    }, 500);
-                    
-                    setTimeout(() => {
-                        const status2 = document.getElementById('status2');
-                        status2.classList.add('active');
-                        status2.innerHTML = `
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
-                                    <span class="text-white">✓</span>
-                                </div>
-                                <span class="text-gray-900 font-medium">${t('policyReader')} <span class="text-green-600">✓ ${t('policyComplete')}</span></span>
-                            </div>
-                        `;
-                    }, 1500);
-                    
-                    setTimeout(() => {
-                        const status3 = document.getElementById('status3');
-                        status3.classList.add('active');
-                        status3.innerHTML = `
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
-                                    <span class="text-white">✓</span>
-                                </div>
-                                <span class="text-gray-900 font-medium">${t('readyAnalysis')}</span>
-                            </div>
-                        `;
-                    }, 2500);
-                    
-                    setTimeout(() => {
-                        renderScreen(3);
-                    }, 3500);
+                    renderAgentThinking('policy');
                     break;
-                    
+
                 case 3:
                     app.innerHTML = `
-                        <div class="max-w-2xl w-full slide-up">
-                            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">${t('policyGlance')}</h2>
+                        <div class="max-w-3xl w-full slide-up">
+                            <h2 class="text-3xl font-bold text-gray-900 mb-2 text-center">${t('policyGlance')}</h2>
+                            <p class="text-center text-sm text-gray-500 mb-8">Maple Mutual Insurance · AUT-ON-2026-00042-MM</p>
                             <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
-                                <div class="space-y-4">
-                                    <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                        <span class="font-medium text-gray-700">${t('liability')}</span>
-                                        <span class="text-lg font-semibold text-gray-900">$1,000,000</span>
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <div class="border-b sm:border-b-0 sm:border-r border-gray-100 pr-4 pb-3 sm:pb-0">
+                                        <div class="text-xs uppercase tracking-wide text-gray-500 mb-1">${t('liability')}</div>
+                                        <div class="text-2xl font-bold text-gray-900">$1,000,000</div>
                                     </div>
-                                    <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                        <span class="font-medium text-gray-700">${t('collision')}</span>
-                                        <span class="text-lg font-semibold text-gray-900">$500 ${t('deductible')}</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                        <span class="font-medium text-gray-700">${t('comprehensive')}</span>
-                                        <span class="text-lg font-semibold text-gray-900">$300 ${t('deductible')}</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                        <span class="font-medium text-gray-700">${t('opcf20')}</span>
-                                        <span class="text-lg font-semibold text-green-600">✓ ${t('yes')}</span>
-                                    </div>
-                                    <div class="flex justify-between items-center py-3">
-                                        <span class="font-medium text-gray-700">${t('opcf44')}</span>
-                                        <span class="text-lg font-semibold text-gray-500">✗ ${t('no')}</span>
+                                    <div class="pl-0 sm:pl-4">
+                                        <div class="text-xs uppercase tracking-wide text-gray-500 mb-1">${t('accidentBenefits')}</div>
+                                        <div class="text-2xl font-bold text-gray-900">${t('standard')}</div>
                                     </div>
                                 </div>
+                                <hr class="my-5 border-gray-100">
+                                <div class="space-y-3 text-sm">
+                                    <div class="flex justify-between"><span class="text-gray-600">${t('collision')}</span><span class="font-semibold text-gray-900">$500 ${t('deductible')}</span></div>
+                                    <div class="flex justify-between"><span class="text-gray-600">${t('comprehensive')}</span><span class="font-semibold text-gray-900">$300 ${t('deductible')}</span></div>
+                                    <div class="flex justify-between"><span class="text-gray-600">${t('opcf20')}</span><span class="font-semibold text-green-700">${t('yes')}</span></div>
+                                    <div class="flex justify-between"><span class="text-gray-600">${t('opcf39')}</span><span class="font-semibold text-green-700">${t('yes')}</span></div>
+                                    <div class="flex justify-between"><span class="text-gray-600">${t('opcf44')}</span><span class="font-semibold text-red-600">${t('no')}</span></div>
+                                </div>
                             </div>
-                            <button onclick="renderScreen(4)" class="btn-primary w-full py-4 rounded-xl font-semibold text-lg">
-                                ${t('checkGaps')}
-                            </button>
+                            <div class="text-center">
+                                <button onclick="renderScreen(4)" class="btn-primary px-8 py-4 rounded-xl font-semibold text-lg">${t('checkGaps')}</button>
+                            </div>
                         </div>
                     `;
                     break;
-                    
+
                 case 4:
                     renderQuestion();
                     break;
-                    
+
                 case 5:
                     app.innerHTML = `
                         <div class="max-w-6xl w-full slide-up">
                             <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">${t('gapReport')}</h2>
-                            
                             <div class="grid md:grid-cols-3 gap-6 mb-8">
-                                <!-- Covered -->
                                 <div class="gap-card bg-white rounded-2xl shadow-xl p-6">
-                                    <div class="flex items-center gap-2 mb-4">
-                                        <span class="text-2xl">✅</span>
-                                        <h3 class="text-xl font-bold text-green-700">${t('covered')}</h3>
-                                    </div>
+                                    <div class="flex items-center gap-2 mb-4"><span class="text-2xl">🟢</span><h3 class="text-xl font-bold text-green-700">${t('covered')}</h3></div>
                                     <div class="space-y-3 text-sm text-gray-700">
                                         <p>• ${t('collisionOk')}</p>
                                         <p>• ${t('comprehensiveOk')}</p>
+                                        <p>• ${t('opcf20Ok')}</p>
                                     </div>
                                 </div>
-                                
-                                <!-- Under-Protected -->
                                 <div class="gap-card bg-white rounded-2xl shadow-xl p-6">
-                                    <div class="flex items-center gap-2 mb-4">
-                                        <span class="text-2xl">⚠️</span>
-                                        <h3 class="text-xl font-bold text-amber-700">${t('underProtected')}</h3>
-                                    </div>
-                                    <div class="space-y-3">
-                                        <p class="font-semibold text-gray-900">${t('liabilityTitle')}</p>
-                                        <p class="text-sm text-gray-700">${t('liabilityConcern')}</p>
-                                        <p class="text-sm text-blue-700 italic">${t('liabilityQuestion')}</p>
+                                    <div class="flex items-center gap-2 mb-4"><span class="text-2xl">🟡</span><h3 class="text-xl font-bold text-amber-700">${t('underProtected')}</h3></div>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <p class="font-semibold text-gray-900">${t('liabilityTitle')}</p>
+                                            <p class="text-xs text-gray-700 mt-1">${t('liabilityConcern')}</p>
+                                            <p class="text-xs text-blue-700 italic mt-1">${t('liabilityQuestion')}</p>
+                                        </div>
+                                        <div class="pt-2 border-t border-gray-100">
+                                            <p class="font-semibold text-gray-900">${t('abTitle')}</p>
+                                            <p class="text-xs text-gray-700 mt-1">${t('abConcern')}</p>
+                                            <p class="text-xs text-blue-700 italic mt-1">${t('abQuestion')}</p>
+                                        </div>
                                     </div>
                                 </div>
-                                
-                                <!-- Consider Adding -->
                                 <div class="gap-card bg-white rounded-2xl shadow-xl p-6">
-                                    <div class="flex items-center gap-2 mb-4">
-                                        <span class="text-2xl">➕</span>
-                                        <h3 class="text-xl font-bold text-teal-700">${t('considerAdding')}</h3>
-                                    </div>
+                                    <div class="flex items-center gap-2 mb-4"><span class="text-2xl">🔴</span><h3 class="text-xl font-bold text-teal-700">${t('considerAdding')}</h3></div>
                                     <div class="space-y-3">
                                         <p class="font-semibold text-gray-900">${t('opcf44Title')}</p>
                                         <p class="text-sm text-gray-700">${t('opcf44Why')}</p>
@@ -448,10 +445,115 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <!-- Disclaimer -->
-                            <div class="bg-amber-50 border-l-4 border-amber-400 rounded-xl p-6">
+                            <div class="bg-amber-50 border-l-4 border-amber-400 rounded-xl p-6 mb-6">
                                 <p class="text-sm text-gray-700">${t('disclaimer')}</p>
+                            </div>
+                            <div class="text-center">
+                                <button onclick="resetApp()" class="btn-tertiary px-6 py-3 rounded-xl font-medium">${t('startOver')}</button>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 6:
+                    app.innerHTML = `
+                        <div class="max-w-3xl w-full slide-up">
+                            <div class="mb-4">
+                                <button onclick="renderScreen(1)" class="text-sm text-gray-500 hover:text-gray-900">${t('claimBack')}</button>
+                            </div>
+                            <h2 class="text-3xl font-bold text-gray-900 mb-3 text-center">${t('claimIntakeTitle')}</h2>
+                            <p class="text-center text-gray-600 mb-8">${t('claimIntakeSubtitle')}</p>
+                            <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+                                <textarea id="claim-textarea" rows="6" placeholder="${t('claimPlaceholder')}" class="w-full border-2 border-gray-200 rounded-xl p-4 text-base text-gray-900 leading-relaxed"></textarea>
+                                <div class="mt-5 text-right">
+                                    <button onclick="startClaimFlow()" class="btn-primary px-8 py-3 rounded-xl font-semibold">${t('claimAnalyze')}</button>
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-500 mb-3">${t('claimScenarioLabel')}</div>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="scenario-chip px-4 py-2 rounded-full text-sm" onclick="selectScenario('rear-end')">${t('scenario1')}</span>
+                                <span class="scenario-chip px-4 py-2 rounded-full text-sm" onclick="selectScenario('hit-run')">${t('scenario2')}</span>
+                                <span class="scenario-chip px-4 py-2 rounded-full text-sm" onclick="selectScenario('vandalism')">${t('scenario3')}</span>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 7:
+                    renderAgentThinking('claim');
+                    break;
+
+                case 8:
+                    const lossLabel = selectedScenario === 'rear-end' ? t('lossRearEnd')
+                                    : selectedScenario === 'hit-run' ? t('lossHitRun')
+                                    : t('lossVandalism');
+                    const faultText = selectedScenario === 'rear-end' ? t('faultRearEnd')
+                                    : selectedScenario === 'hit-run' ? t('faultHitRun')
+                                    : t('faultVandalism');
+                    const coverageText = selectedScenario === 'rear-end' ? t('coverageRearEnd')
+                                       : selectedScenario === 'hit-run' ? t('coverageHitRun')
+                                       : t('coverageVandalism');
+                    app.innerHTML = `
+                        <div class="max-w-4xl w-full slide-up">
+                            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">${t('claimRecTitle')}</h2>
+                            <div class="bg-white rounded-2xl shadow-xl p-6 mb-5">
+                                <h3 class="text-sm uppercase tracking-wide text-gray-500 mb-2">${t('whatHappened')}</h3>
+                                <p class="text-gray-900"><span class="font-semibold">${t('lossType')}</span> ${lossLabel}</p>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-xl p-6 mb-5 claim-section fault">
+                                <h3 class="text-lg font-bold text-gray-900 mb-3">⚖️ ${t('faultAssessment')}</h3>
+                                <p class="text-gray-700 leading-relaxed mb-3">${faultText}</p>
+                                <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-lg p-3">
+                                    <p class="text-xs text-gray-700"><strong>Important:</strong> ${t('faultDisclaimer')}</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-xl p-6 mb-5 claim-section">
+                                <h3 class="text-lg font-bold text-gray-900 mb-3">🛡️ ${t('coverageApplies')}</h3>
+                                <p class="text-gray-700 leading-relaxed">${coverageText}</p>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-xl p-6 mb-5 claim-section next-steps">
+                                <h3 class="text-lg font-bold text-gray-900 mb-4">⏱️ ${t('nextSteps')}</h3>
+                                <div class="mb-5">
+                                    <h4 class="font-semibold text-gray-900 mb-2">${t('stepRightNow')}</h4>
+                                    <div class="space-y-1">
+                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepRightNow1')}</span></div>
+                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepRightNow2')}</span></div>
+                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepRightNow3')}</span></div>
+                                        <div class="checklist-item"><span class="checklist-icon warning">⚠</span><span class="text-sm text-gray-700"><strong>${t('stepRightNowWarn')}</strong></span></div>
+                                    </div>
+                                </div>
+                                <div class="mb-5">
+                                    <h4 class="font-semibold text-gray-900 mb-2">${t('stepWithin24h')}</h4>
+                                    <div class="space-y-1">
+                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepWithin24h1')}</span></div>
+                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepWithin24h2')}</span></div>
+                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepWithin24h3')}</span></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 mb-2">${t('stepThisWeek')}</h4>
+                                    <div class="space-y-1">
+                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepThisWeek1')}</span></div>
+                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepThisWeek2')}</span></div>
+                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepThisWeek3')}</span></div>
+                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepThisWeek4')}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-xl p-6 mb-5">
+                                <h3 class="text-lg font-bold text-gray-900 mb-3">❓ ${t('smartQuestions')}</h3>
+                                <div class="space-y-2">
+                                    <p class="text-sm text-blue-700 italic">${t('question1')}</p>
+                                    <p class="text-sm text-blue-700 italic">${t('question2')}</p>
+                                    <p class="text-sm text-blue-700 italic">${t('question3')}</p>
+                                    <p class="text-sm text-blue-700 italic">${t('question4')}</p>
+                                </div>
+                            </div>
+                            <div class="bg-amber-50 border-l-4 border-amber-400 rounded-xl p-6 mb-6">
+                                <p class="text-sm text-gray-700">${t('claimDisclaimer')}</p>
+                            </div>
+                            <div class="text-center">
+                                <button onclick="resetApp()" class="btn-tertiary px-6 py-3 rounded-xl font-medium">${t('startOver')}</button>
                             </div>
                         </div>
                     `;
@@ -459,48 +561,60 @@
             }
         }
 
+        function renderAgentThinking(flowType) {
+            const app = document.getElementById('app');
+            const labels = flowType === 'policy' ? {
+                a1: t('triageAgent'), a1complete: t('triageComplete'),
+                a2: t('policyReader'), a2complete: t('policyComplete'),
+                a3: t('readyAnalysis'), nextScreen: 3
+            } : {
+                a1: t('triageClaim'), a1complete: t('triageClaimComplete'),
+                a2: t('claimPrepAgent'), a2complete: t('claimPrepComplete'),
+                a3: t('readyClaim'), nextScreen: 8
+            };
+
+            app.innerHTML = `
+                <div class="max-w-2xl w-full fade-in">
+                    <div class="bg-white rounded-2xl shadow-xl p-8">
+                        <div class="space-y-6">
+                            <div class="status-line" id="s1"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center"><span class="loading-dot">●</span></div><span class="text-gray-600">${labels.a1}</span></div></div>
+                            <div class="status-line" id="s2"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center"><span class="loading-dot">●</span></div><span class="text-gray-600">${labels.a2}</span></div></div>
+                            <div class="status-line" id="s3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center"><span class="loading-dot">●</span></div><span class="text-gray-600">${labels.a3}</span></div></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                const s = document.getElementById('s1');
+                if (s) { s.classList.add('active'); s.innerHTML = `<div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center"><span class="text-white">✓</span></div><span class="text-gray-900 font-medium">${labels.a1} <span class="text-green-600">✓ ${labels.a1complete}</span></span></div>`; }
+            }, 500);
+            setTimeout(() => {
+                const s = document.getElementById('s2');
+                if (s) { s.classList.add('active'); s.innerHTML = `<div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center"><span class="text-white">✓</span></div><span class="text-gray-900 font-medium">${labels.a2} <span class="text-green-600">✓ ${labels.a2complete}</span></span></div>`; }
+            }, 1500);
+            setTimeout(() => {
+                const s = document.getElementById('s3');
+                if (s) { s.classList.add('active'); s.innerHTML = `<div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center"><span class="text-white">✓</span></div><span class="text-gray-900 font-medium">${labels.a3}</span></div>`; }
+                setTimeout(() => renderScreen(labels.nextScreen), 700);
+            }, 2500);
+        }
+
         function renderQuestion() {
             const app = document.getElementById('app');
             let questionText, options;
-            
             switch(currentQuestion) {
-                case 1:
-                    questionText = t('q1');
-                    options = [
-                        { text: t('yes'), value: true },
-                        { text: t('no'), value: false }
-                    ];
-                    break;
-                case 2:
-                    questionText = t('q2');
-                    options = [
-                        { text: t('yes'), value: true },
-                        { text: t('no'), value: false }
-                    ];
-                    break;
-                case 3:
-                    questionText = t('q3');
-                    options = [
-                        { text: t('urban'), value: 'urban' },
-                        { text: t('suburban'), value: 'suburban' },
-                        { text: t('highway'), value: 'highway' }
-                    ];
-                    break;
+                case 1: questionText = t('q1'); options = [{ text: t('yes'), value: true }, { text: t('no'), value: false }]; break;
+                case 2: questionText = t('q2'); options = [{ text: t('yes'), value: true }, { text: t('no'), value: false }]; break;
+                case 3: questionText = t('q3'); options = [{ text: t('urban'), value: 'urban' }, { text: t('suburban'), value: 'suburban' }, { text: t('highway'), value: 'highway' }]; break;
             }
-            
             app.innerHTML = `
                 <div class="max-w-2xl w-full slide-up">
                     <div class="bg-white rounded-2xl shadow-xl p-12 text-center">
-                        <div class="mb-8">
-                            <span class="text-sm font-medium text-gray-500">${currentLanguage === 'en' ? 'Question' : 'Question'} ${currentQuestion} ${currentLanguage === 'en' ? 'of' : 'de'} 3</span>
-                        </div>
+                        <div class="mb-8"><span class="text-sm font-medium text-gray-500">${currentLanguage === 'en' ? 'Question' : 'Question'} ${currentQuestion} ${currentLanguage === 'en' ? 'of' : 'de'} 3</span></div>
                         <h2 class="text-2xl font-bold text-gray-900 mb-8">${questionText}</h2>
                         <div class="flex gap-4 justify-center flex-wrap">
-                            ${options.map(opt => `
-                                <button onclick="answerQuestion('${opt.value}')" class="btn-secondary px-8 py-4 rounded-xl font-semibold text-lg min-w-[140px]">
-                                    ${opt.text}
-                                </button>
-                            `).join('')}
+                            ${options.map(opt => `<button onclick="answerQuestion('${opt.value}')" class="btn-secondary px-8 py-4 rounded-xl font-semibold text-lg min-w-[140px]">${opt.text}</button>`).join('')}
                         </div>
                     </div>
                 </div>
@@ -509,26 +623,15 @@
 
         function answerQuestion(value) {
             switch(currentQuestion) {
-                case 1:
-                    answers.dependents = value === 'true';
-                    break;
-                case 2:
-                    answers.homeowner = value === 'true';
-                    break;
-                case 3:
-                    answers.commute = value;
-                    break;
+                case 1: answers.dependents = value === 'true'; break;
+                case 2: answers.homeowner = value === 'true'; break;
+                case 3: answers.commute = value; break;
             }
-            
-            if (currentQuestion < 3) {
-                currentQuestion++;
-                renderQuestion();
-            } else {
-                renderScreen(5);
-            }
+            if (currentQuestion < 3) { currentQuestion++; renderQuestion(); }
+            else { renderScreen(5); }
         }
 
-        // Initialize
+        updateChrome();
         renderScreen(1);
     </script>
 </body>
