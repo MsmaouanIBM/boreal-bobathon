@@ -1,0 +1,42 @@
+# .bobignore — Boréal project
+# Restricts Bob from reading sensitive or irrelevant files.
+# Syntax: same as .gitignore
+
+# === Secrets & credentials ===
+.env
+.env.*
+*.key
+*.pem
+secrets/
+config/credentials.json
+config/secrets.json
+
+# === Personally Identifiable Information (PII) ===
+# Insurance policy data may contain customer names, addresses,
+# policy numbers, license plates, VINs. Bob must not read these.
+demo/sample-policies/raw/
+demo/sample-policies/*.original.pdf
+demo/customer-data/
+**/*pii*
+**/*personal*
+
+# === System & build artifacts ===
+node_modules/
+dist/
+build/
+.cache/
+.tmp/
+*.log
+
+# === IDE & OS ===
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# === Notes ===
+# When working with real or sample policy PDFs, place sanitized
+# (redacted) copies in demo/sample-policies/ for Bob to read.
+# Originals (if any) go in demo/sample-policies/raw/ — gitignored.
+
+# Made with Bob

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boréal - AI Insurance Advisor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: #F8F6F0;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 35px,
+                    rgba(15, 61, 46, 0.02) 35px,
+                    rgba(15, 61, 46, 0.02) 70px
+                );
+        }
+        
+        .boreal-logo {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #0F3D2E;
+            letter-spacing: -0.02em;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .upload-zone {
+            border: 3px dashed #5AB8A8;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-zone:hover {
+            border-color: #0F3D2E;
+            background-color: rgba(90, 184, 168, 0.05);
+            transform: scale(1.02);
+        }
+        
+        .status-line {
+            opacity: 0.3;
+            transition: all 0.5s ease;
+        }
+        
+        .status-line.active {
+            opacity: 1;
+        }
+        
+        .btn-primary {
+            background-color: #0F3D2E;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #1a5a43;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(15, 61, 46, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: #5AB8A8;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #4a9d8f;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(90, 184, 168, 0.2);
+        }
+        
+        .lang-toggle {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .lang-toggle.active {
+            background-color: #0F3D2E;
+            color: white;
+        }
+        
+        .lang-toggle:not(.active) {
+            color: #0F3D2E;
+            opacity: 0.5;
+        }
+        
+        .lang-toggle:not(.active):hover {
+            opacity: 1;
+            background-color: rgba(15, 61, 46, 0.1);
+        }
+        
+        .gap-card {
+            transition: all 0.3s ease;
+        }
+        
+        .gap-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Language Toggle (Fixed Top Right) -->
+    <div class="fixed top-6 right-6 z-50 flex gap-2 bg-white rounded-xl shadow-lg p-1">
+        <div class="lang-toggle active" data-lang="en" onclick="switchLanguage('en')">EN</div>
+        <div class="lang-toggle" data-lang="fr" onclick="switchLanguage('fr')">FR</div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div id="app" class="flex-1 flex items-center justify-center p-6">
+        <!-- Screens will be injected here -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-sm text-gray-500">
+        <span data-i18n="footer">Built on IBM Bob</span>
+    </footer>
+
+    <script>
+        // State Management
+        let currentScreen = 1;
+        let currentLanguage = 'en';
+        let currentQuestion = 1;
+        let answers = {
+            dependents: null,
+            homeowner: null,
+            commute: null
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                footer: 'Built on IBM Bob',
+                // Screen 1
+                tagline: 'Read your policy. Know your gaps. In your language.',
+                uploadText: 'Drop your auto insurance policy here',
+                uploadSubtext: 'or click to browse',
+                // Screen 2
+                triageAgent: 'Triage Agent: detecting language and province...',
+                triageComplete: 'Ontario, English',
+                policyReader: 'Policy Reader Agent: extracting coverage...',
+                policyComplete: '6 pages parsed',
+                readyAnalysis: 'Ready for analysis',
+                // Screen 3
+                policyGlance: 'Your Policy at a Glance',
+                liability: 'Liability',
+                collision: 'Collision',
+                comprehensive: 'Comprehensive',
+                deductible: 'deductible',
+                opcf20: 'OPCF 20 (Transportation Replacement)',
+                opcf44: 'OPCF 44R (Family Protection)',
+                yes: 'Yes',
+                no: 'No',
+                checkGaps: 'Check my coverage gaps →',
+                // Screen 4
+                q1: 'Do you have dependents?',
+                q2: 'Do you own your home?',
+                q3: "What's your daily commute?",
+                urban: 'Urban',
+                suburban: 'Suburban',
+                highway: 'Highway',
+                // Screen 5
+                gapReport: 'Coverage Gap Analysis',
+                covered: 'COVERED',
+                underProtected: 'UNDER-PROTECTED',
+                considerAdding: 'CONSIDER ADDING',
+                collisionOk: 'Collision: $500 deductible looks appropriate',
+                comprehensiveOk: 'Comprehensive: $300 deductible is reasonable',
+                liabilityTitle: 'Liability: $1,000,000',
+                liabilityConcern: 'Concern: Light for homeowners with dependents. Most advisors recommend $2M.',
+                liabilityQuestion: 'Question for your broker: "Can we increase liability to $2M and what\'s the cost?"',
+                opcf44Title: 'OPCF 44R (Family Protection)',
+                opcf44Why: 'Why: Highway commute exposes you to underinsured drivers. This endorsement protects you.',
+                opcf44Question: 'Question for your broker: "What does it cost to add OPCF 44R to my policy?"',
+                disclaimer: 'Educational guidance only. Not a quote. Not legal advice. Consult your broker for purchasing decisions.'
+            },
+            fr: {
+                footer: 'Propulsé par IBM Bob',
+                // Screen 1
+                tagline: 'Lisez votre police. Connaissez vos écarts. Dans votre langue.',
+                uploadText: 'Déposez votre police d\'assurance auto ici',
+                uploadSubtext: 'ou cliquez pour parcourir',
+                // Screen 2
+                triageAgent: 'Agent de triage : détection de la langue et de la province...',
+                triageComplete: 'Ontario, anglais',
+                policyReader: 'Agent de lecture : extraction de la couverture...',
+                policyComplete: '6 pages analysées',
+                readyAnalysis: 'Prêt pour l\'analyse',
+                // Screen 3
+                policyGlance: 'Votre police en un coup d\'œil',
+                liability: 'Responsabilité civile',
+                collision: 'Collision',
+                comprehensive: 'Tous risques',
+                deductible: 'de franchise',
+                opcf20: 'Avenant OPCF 20 (Remplacement de véhicule)',
+                opcf44: 'Avenant FPQ n° 44R (Protection familiale)',
+                yes: 'Oui',
+                no: 'Non',
+                checkGaps: 'Vérifier mes écarts de couverture →',
+                // Screen 4
+                q1: 'Avez-vous des personnes à charge?',
+                q2: 'Êtes-vous propriétaire de votre maison?',
+                q3: 'Quel est votre trajet quotidien?',
+                urban: 'Urbain',
+                suburban: 'Banlieue',
+                highway: 'Autoroute',
+                // Screen 5
+                gapReport: 'Analyse des écarts de couverture',
+                covered: 'COUVERT',
+                underProtected: 'SOUS-PROTÉGÉ',
+                considerAdding: 'À CONSIDÉRER',
+                collisionOk: 'Collision : franchise de 500 $ appropriée',
+                comprehensiveOk: 'Tous risques : franchise de 300 $ raisonnable',
+                liabilityTitle: 'Responsabilité civile : 1 000 000 $',
+                liabilityConcern: 'Préoccupation : Léger pour les propriétaires avec personnes à charge. La plupart des conseillers recommandent 2 000 000 $.',
+                liabilityQuestion: 'Question pour votre courtier : « Pouvons-nous augmenter la responsabilité à 2 000 000 $ et quel est le coût? »',
+                opcf44Title: 'Avenant FPQ n° 44R (Protection familiale)',
+                opcf44Why: 'Pourquoi : Les trajets sur autoroute vous exposent aux conducteurs sous-assurés. Cet avenant vous protège.',
+                opcf44Question: 'Question pour votre courtier : « Combien coûte l\'ajout de l\'avenant FPQ n° 44R à ma police? »',
+                disclaimer: 'Conseils éducatifs uniquement. Ceci n\'est ni une soumission, ni un avis juridique. Consultez votre courtier pour toute décision d\'achat.'
+            }
+        };
+
+        function t(key) {
+            return translations[currentLanguage][key] || key;
+        }
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            document.querySelectorAll('.lang-toggle').forEach(toggle => {
+                toggle.classList.toggle('active', toggle.dataset.lang === lang);
+            });
+            renderScreen(currentScreen);
+        }
+
+        function renderScreen(screenNum) {
+            currentScreen = screenNum;
+            const app = document.getElementById('app');
+            
+            switch(screenNum) {
+                case 1:
+                    app.innerHTML = `
+                        <div class="max-w-2xl w-full text-center fade-in">
+                            <div class="boreal-logo mb-4">Boréal</div>
+                            <p class="text-xl text-gray-600 mb-12" data-i18n="tagline">${t('tagline')}</p>
+                            <div class="upload-zone bg-white rounded-2xl p-16 cursor-pointer" onclick="renderScreen(2)">
+                                <svg class="w-20 h-20 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                </svg>
+                                <p class="text-lg font-medium text-gray-700 mb-2">${t('uploadText')}</p>
+                                <p class="text-sm text-gray-500">${t('uploadSubtext')}</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 2:
+                    app.innerHTML = `
+                        <div class="max-w-2xl w-full fade-in">
+                            <div class="bg-white rounded-2xl shadow-xl p-8">
+                                <div class="space-y-6">
+                                    <div class="status-line" id="status1">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <span class="loading-dot">●</span>
+                                            </div>
+                                            <span class="text-gray-600">${t('triageAgent')}</span>
+                                        </div>
+                                    </div>
+                                    <div class="status-line" id="status2">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <span class="loading-dot">●</span>
+                                            </div>
+                                            <span class="text-gray-600">${t('policyReader')}</span>
+                                        </div>
+                                    </div>
+                                    <div class="status-line" id="status3">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <span class="loading-dot">●</span>
+                                            </div>
+                                            <span class="text-gray-600">${t('readyAnalysis')}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Animate status lines
+                    setTimeout(() => {
+                        const status1 = document.getElementById('status1');
+                        status1.classList.add('active');
+                        status1.innerHTML = `
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                                    <span class="text-white">✓</span>
+                                </div>
+                                <span class="text-gray-900 font-medium">${t('triageAgent')} <span class="text-green-600">✓ ${t('triageComplete')}</span></span>
+                            </div>
+                        `;
+                    }, 500);
+                    
+                    setTimeout(() => {
+                        const status2 = document.getElementById('status2');
+                        status2.classList.add('active');
+                        status2.innerHTML = `
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                                    <span class="text-white">✓</span>
+                                </div>
+                                <span class="text-gray-900 font-medium">${t('policyReader')} <span class="text-green-600">✓ ${t('policyComplete')}</span></span>
+                            </div>
+                        `;
+                    }, 1500);
+                    
+                    setTimeout(() => {
+                        const status3 = document.getElementById('status3');
+                        status3.classList.add('active');
+                        status3.innerHTML = `
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                                    <span class="text-white">✓</span>
+                                </div>
+                                <span class="text-gray-900 font-medium">${t('readyAnalysis')}</span>
+                            </div>
+                        `;
+                    }, 2500);
+                    
+                    setTimeout(() => {
+                        renderScreen(3);
+                    }, 3500);
+                    break;
+                    
+                case 3:
+                    app.innerHTML = `
+                        <div class="max-w-2xl w-full slide-up">
+                            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">${t('policyGlance')}</h2>
+                            <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                        <span class="font-medium text-gray-700">${t('liability')}</span>
+                                        <span class="text-lg font-semibold text-gray-900">$1,000,000</span>
+                                    </div>
+                                    <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                        <span class="font-medium text-gray-700">${t('collision')}</span>
+                                        <span class="text-lg font-semibold text-gray-900">$500 ${t('deductible')}</span>
+                                    </div>
+                                    <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                        <span class="font-medium text-gray-700">${t('comprehensive')}</span>
+                                        <span class="text-lg font-semibold text-gray-900">$300 ${t('deductible')}</span>
+                                    </div>
+                                    <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                        <span class="font-medium text-gray-700">${t('opcf20')}</span>
+                                        <span class="text-lg font-semibold text-green-600">✓ ${t('yes')}</span>
+                                    </div>
+                                    <div class="flex justify-between items-center py-3">
+                                        <span class="font-medium text-gray-700">${t('opcf44')}</span>
+                                        <span class="text-lg font-semibold text-gray-500">✗ ${t('no')}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick="renderScreen(4)" class="btn-primary w-full py-4 rounded-xl font-semibold text-lg">
+                                ${t('checkGaps')}
+                            </button>
+                        </div>
+                    `;
+                    break;
+                    
+                case 4:
+                    renderQuestion();
+                    break;
+                    
+                case 5:
+                    app.innerHTML = `
+                        <div class="max-w-6xl w-full slide-up">
+                            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">${t('gapReport')}</h2>
+                            
+                            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                                <!-- Covered -->
+                                <div class="gap-card bg-white rounded-2xl shadow-xl p-6">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <span class="text-2xl">✅</span>
+                                        <h3 class="text-xl font-bold text-green-700">${t('covered')}</h3>
+                                    </div>
+                                    <div class="space-y-3 text-sm text-gray-700">
+                                        <p>• ${t('collisionOk')}</p>
+                                        <p>• ${t('comprehensiveOk')}</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Under-Protected -->
+                                <div class="gap-card bg-white rounded-2xl shadow-xl p-6">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <span class="text-2xl">⚠️</span>
+                                        <h3 class="text-xl font-bold text-amber-700">${t('underProtected')}</h3>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <p class="font-semibold text-gray-900">${t('liabilityTitle')}</p>
+                                        <p class="text-sm text-gray-700">${t('liabilityConcern')}</p>
+                                        <p class="text-sm text-blue-700 italic">${t('liabilityQuestion')}</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Consider Adding -->
+                                <div class="gap-card bg-white rounded-2xl shadow-xl p-6">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <span class="text-2xl">➕</span>
+                                        <h3 class="text-xl font-bold text-teal-700">${t('considerAdding')}</h3>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <p class="font-semibold text-gray-900">${t('opcf44Title')}</p>
+                                        <p class="text-sm text-gray-700">${t('opcf44Why')}</p>
+                                        <p class="text-sm text-blue-700 italic">${t('opcf44Question')}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Disclaimer -->
+                            <div class="bg-amber-50 border-l-4 border-amber-400 rounded-xl p-6">
+                                <p class="text-sm text-gray-700">${t('disclaimer')}</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+        }
+
+        function renderQuestion() {
+            const app = document.getElementById('app');
+            let questionText, options;
+            
+            switch(currentQuestion) {
+                case 1:
+                    questionText = t('q1');
+                    options = [
+                        { text: t('yes'), value: true },
+                        { text: t('no'), value: false }
+                    ];
+                    break;
+                case 2:
+                    questionText = t('q2');
+                    options = [
+                        { text: t('yes'), value: true },
+                        { text: t('no'), value: false }
+                    ];
+                    break;
+                case 3:
+                    questionText = t('q3');
+                    options = [
+                        { text: t('urban'), value: 'urban' },
+                        { text: t('suburban'), value: 'suburban' },
+                        { text: t('highway'), value: 'highway' }
+                    ];
+                    break;
+            }
+            
+            app.innerHTML = `
+                <div class="max-w-2xl w-full slide-up">
+                    <div class="bg-white rounded-2xl shadow-xl p-12 text-center">
+                        <div class="mb-8">
+                            <span class="text-sm font-medium text-gray-500">${currentLanguage === 'en' ? 'Question' : 'Question'} ${currentQuestion} ${currentLanguage === 'en' ? 'of' : 'de'} 3</span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-8">${questionText}</h2>
+                        <div class="flex gap-4 justify-center flex-wrap">
+                            ${options.map(opt => `
+                                <button onclick="answerQuestion('${opt.value}')" class="btn-secondary px-8 py-4 rounded-xl font-semibold text-lg min-w-[140px]">
+                                    ${opt.text}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function answerQuestion(value) {
+            switch(currentQuestion) {
+                case 1:
+                    answers.dependents = value === 'true';
+                    break;
+                case 2:
+                    answers.homeowner = value === 'true';
+                    break;
+                case 3:
+                    answers.commute = value;
+                    break;
+            }
+            
+            if (currentQuestion < 3) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                renderScreen(5);
+            }
+        }
+
+        // Initialize
+        renderScreen(1);
+    </script>
+</body>
+</html>
