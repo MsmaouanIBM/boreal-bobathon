@@ -16,6 +16,7 @@ config/secrets.json
 # policy numbers, license plates, VINs. Bob must not read these.
 demo/sample-policies/raw/
 demo/sample-policies/*.original.pdf
+demo/boreal-test-policy.pdf
 demo/customer-data/
 **/*pii*
 **/*personal*
