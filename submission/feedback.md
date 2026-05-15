@@ -26,13 +26,11 @@ Bob's panel was visible an esay It became my default "what should I do next?" su
 The TODO list → approve → diff-by-diff approval workflow was the single feature that let me, as a non-developer, ship real code changes. Every change went through a review gate before being applied. For someone who can't write 200 lines of TypeScript fluently, this was the difference between "I might break the app" and "I can see exactly what changed before saving."
 
 
-
 ### 3. Context Studio and `.bobignore` (Boréal-specific)
 
 For Boréal, Context Studio is the architectural feature that made the bilingual moat possible. Building 280+ EN/FR regulatory term pairs in a single configuration file — loaded once, applied to every agent — is a fundamentally different workflow than packing context into every prompt.
 
 The `.bobignore` mechanism working as a runtime security primitive (not as prompt-engineering pleading) gave me confidence to handle PII without anxiety.
-
 
 
 ### 4. Speed — objective measurements
@@ -78,8 +76,6 @@ For me as a non-developer business transformation consultant, Bob is closer to '
 
 Yes, for sure. I would use Bob again, and I would recommend it to others. It's a powerful tool that can help you get things done faster and more efficiently."*
 ---
-
-
 
 ## Final note
 
