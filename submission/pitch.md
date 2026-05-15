@@ -1,96 +1,115 @@
-# Boréal — Bob-a-thon Submission Pitch
+# Boréal 🌲
 
-> Boréal — A bilingual AI insurance advisor that reads your policy, knows your province, and tells you what you actually have — in your language.
+> **Your policy. Your gaps. Your claim. In both official languages.**
+
+**A bilingual AI insurance advisor built natively on IBM Bob + Context Studio.**
+
+IBM Bob-a-thon submission · TrueNorth AI Team · May 22, 2026
 
 ---
 
 ## The problem
 
-Insurance is the most-purchased and least-understood financial product in Canada.
+Insurance in Canada has a clarity problem. The average homeowner spends 45 minutes with their policy and still can't answer one question: *am I actually covered?* For the ~30% of Canadians who consume insurance in French, the problem multiplies — most consumer tools translate badly, regulatory terminology gets lost, and customers fall through the cracks of a bilingual obligation that every Canadian P&C insurer has but few execute well.
 
-- Every household has it. Almost nobody reads it.
-- Millions of Canadians read their policies in their second language.
-- They don't ask their broker because they don't know what to ask.
-- They find out what's missing only after a claim.
-
-## The solution: Boréal
-
-A multi-agent AI system built natively on IBM Bob that reads a Canadian insurance policy, identifies coverage gaps relative to the user's life situation, and arms them with the right questions for their broker — in English or authentic regulatory French.
-
-## Why this wins
-
-### The bilingual moat
-Boréal uses an authentic Canadian regulatory terminology framework (280+ verified EN/FR term pairs) curated from publicly available Canadian P&C insurance documentation — not Google Translate. Real terms like Avenant FPQ n° 44R, Indemnités d'accident, Indemnisation directe pour dommages matériels. This is what no other team can replicate.
-
-### Genuinely agentic, not a chatbot
-
-Four coordinated agents, not one LLM call:
-
-```mermaid
-flowchart TD
-    A["Triage Agent<br/>language + province + intent"]
-    A --> B["Policy Reader<br/>extracts coverage from PDF"]
-    A --> C["Coverage Advisor<br/>identifies gaps"]
-    A --> D["Claim Prep<br/>guides post-loss steps"]
-    style A fill:#0F3D2E,stroke:#0F3D2E,color:#fff
-    style B fill:#5AB8A8,stroke:#0F3D2E,color:#000
-    style C fill:#5AB8A8,stroke:#0F3D2E,color:#000
-    style D fill:#5AB8A8,stroke:#0F3D2E,color:#000
-```
-
-### Built natively on Bob's three pillars
-
-| Pillar | Implementation |
-|---|---|
-| Spec-driven development | Strict scope: ON auto, EN/FR. Hard guardrails: no pricing, no legal advice, no policy binding. |
-| Context Studio | Provincial regulations, bilingual terminology framework, tone & disclaimer guardrails. |
-| Agentic design | Four coordinated agents with clear handoffs and structured outputs. |
-
-### Security-first
-Boréal handles personally identifiable information from insurance policies. The project uses Bob's .bobignore mechanism plus the protected-file approval flow to prevent the AI from reading raw customer data — only sanitized, redacted samples are accessible.
-
-## Demo flow (4 minutes)
-
-1. Hook (0:00) — Real frustration: 45 minutes with a policy, still confused
-2. Policy upload (1:00) — PDF in, structured coverage out in 5 seconds
-3. Coverage gap report (1:50) — 3 lifestyle questions → COVERED / UNDER-PROTECTED / CONSIDER ADDING
-4. Bilingual flip (2:50) — Same gap report rendered in authentic regulatory French
-5. The Bob narrative (3:20) — Spec, Context, Agents — judges' scoring criteria, on screen
-6. Vision close (3:45) — Boréal expands province-by-province, like the boreal forest itself
-
-## Reusability
-
-Boréal's architecture is immediately reusable for IBM Consulting clients across Canadian financial services:
-
-- Every Canadian P&C insurer has a bilingual obligation
-- Every Canadian bank has cross-border bilingual compliance needs
-- The Triage → Specialist agent pattern transfers to claims, underwriting, fraud triage
-- The bilingual regulatory terminology framework is asset-grade and reusable
-
-## Scope discipline
-
-In scope (built):
-- Ontario auto insurance
-- English + French
-- Four agents (Triage, Policy Reader, Coverage Advisor, Claim Prep)
-
-Out of scope (vision):
-- Other provinces (architecture-ready)
-- Home, tenant, life (architecture-ready)
-- Pricing, quoting, binding (regulatory boundary, never crossing)
-
-## Submission package
-
-| File | Purpose |
-|---|---|
-| docs/demo-script.md | Word-for-word video script |
-| context/context-studio-config.md | Persona, guardrails, terminology, tone, response templates |
-| agents/01-triage-agent.md → 04-claim-prep-agent.md | System prompts for each agent |
-| prototype/ | Interactive UI mockup (HTML/Figma) |
-| demo/boreal-demo.mp4 | 4-minute submission video |
-| .bobignore | Security configuration |
-| README.md | Project overview & navigation |
+Most AI insurance demos solve half the problem: they summarize a policy. They stop at the moment that matters least. Boréal does both halves — **pre-loss gap analysis and post-loss claim guidance** — bilingually, end-to-end.
 
 ---
 
-Boréal — built on Bob. Pour vrai.
+## The solution
+
+**Four coordinated agents, two complete flows, one bilingual experience.**
+
+| Flow | What it does |
+|---|---|
+| **Policy Review** *(pre-loss)* | Upload an Ontario auto policy → Policy Reader extracts coverages with PII redacted → 3 lifestyle questions → Coverage Advisor scores 13 gap rules → user gets exact questions to ask their broker. |
+| **Claim Prep** *(post-loss)* | User describes what happened (or picks a scenario) → Triage classifies the loss type → Claim Prep Agent applies Ontario Fault Determination Rules → user gets fault assessment, coverage path, 24-hour checklist, and adjuster questions. |
+
+Built and demoed on **Maple Mutual / Jean-Pierre Tremblay** — a fictional Ontario test policy designed to surface meaningful gaps (Rules R1, R2, R4, R7) and three claim scenarios (rear-end, hit-a-deer, vandalism).
+
+---
+
+## Three competitive moats
+
+🇨🇦 **Bilingual moat.** 280+ verified EN/FR regulatory term pairs sourced from the *Manuel du plan statistique automobile* (PSA), GISA / ASAG bulletins, and Ontario Auto Reform documentation. *Avenant FPQ n° 44R. Indemnités d'accident bonifiées. IDDM.* This isn't Google Translate — it's the terminology only an in-domain Canadian P&C practitioner has working access to. Hard to copy. Weeks of work to replicate.
+
+🤖 **Genuinely agentic.** Four specialized agents with versioned system prompts, structured outputs, and clean handoffs — not one chatbot pretending to be smart. The **Claim Prep Agent** is the differentiator: most Bob-a-thon submissions stop at summarize-a-document. Boréal goes to the harder problem — *what do I do now, at the scene, with the adjuster on the phone tomorrow?*
+
+🎯 **Calibrated honesty.** When a user's claim description is ambiguous, Boréal does not guess. It surfaces what it heard and asks the user to clarify. When Ontario's Fault Determination Rules contain edge cases (e.g., swerved-vs-impacted in an animal strike), Boréal flags the caveat explicitly. Production-grade calibration encoded in agent specs, not a chat-prompt afterthought.
+
+---
+
+## How Boréal maps to Bob's three pillars
+
+| Pillar | Evidence |
+|---|---|
+| **Spec-driven** | Every agent has a versioned system prompt with role, inputs, outputs, hard rules, edge cases (`agents/01-triage-agent.md` → `04-claim-prep-agent.md`). Hard guardrails: no pricing, no legal advice, no policy binding. |
+| **Context Studio** | Provincial regulations, bilingual terminology framework, tone & disclaimer guardrails — all in `context/context-studio-config.md`. PII redaction rules encoded in the Policy Reader Agent v2. |
+| **Agentic design** | Four coordinated agents with explicit handoffs. Triage routes by language + intent. Policy Reader → Coverage Advisor for pre-loss. Triage → Claim Prep for post-loss. Structured YAML outputs between agents. |
+
+---
+
+## What's in the submission
+
+| Artifact | What to look at |
+|---|---|
+| `prototype/boreal-prototype.html` | **1,000-line interactive prototype, 10 screens, EN/FR.** Both flows fully clickable, scenario-aware, with calibrated-uncertainty fallback. Open it and play. |
+| `agents/` | 4 versioned system prompts (~1,400 lines total). All v2 except Triage (v1 already solid). |
+| `context/context-studio-config.md` | Bilingual terminology framework + Boréal persona + hard guardrails. |
+| `demo/boreal-test-policy.pdf` | 3-page fictional Maple Mutual / Jean-Pierre Tremblay policy designed to trigger 4 specific gap rules. |
+| `docs/demo-script.md` | Word-for-word 4-minute video script with timing marks. |
+| `submission/boreal-demo.mp4` | The 4-minute demo video itself. |
+| `.bobignore` | Security configuration — prevents Bob from reading raw PII files. |
+
+---
+
+## Reusability for IBM Consulting
+
+Boréal's architecture is **immediately reusable** for Canadian financial services clients:
+
+- Every Canadian P&C insurer has a bilingual obligation under the Official Languages Act and provincial consumer protection laws.
+- Every Canadian bank has cross-border bilingual compliance needs.
+- The Triage → Specialist agent pattern transfers cleanly to claims triage, underwriting intake, fraud screening, and customer complaint routing.
+- The bilingual regulatory terminology framework is an asset-grade reusable IP — instantly applicable to property, tenant, life, and commercial lines.
+
+---
+
+## Scope discipline
+
+**In scope (built and demonstrable):**
+- Ontario auto insurance
+- English + French
+- Four agents (Triage, Policy Reader v2, Coverage Advisor v2, Claim Prep v2)
+- Two flows (gap analysis + claim guidance)
+- Three claim scenarios (rear-end, animal strike, vandalism)
+
+**Out of scope (architecture-ready, not built):**
+- Other provinces (config-driven, would inherit the framework)
+- Home, tenant, commercial, life (same agent topology, different context)
+- Pricing, quoting, policy binding — *regulatory boundaries Boréal will never cross.* This is education, not advice.
+
+---
+
+## Why a Canadian P&C practitioner built this
+
+Boréal was built by an IBM Consulting practitioner who works on the **Canadian P&C regulatory reporting program** (the Automobile Statistical Plan / GISA / ASAG). The bilingual terminology framework draws on real ERD / DEC documentation, GISA bulletins (including the 2026-04 and 2026-05 Alberta v4.2 releases), and the PSA Manuel du plan statistique — sources only an in-domain practitioner has working access to.
+
+This isn't a generic LLM demo dressed in maple leaves. It's an authentic Canadian insurance product spec, built by someone who lives in the regulatory world it serves.
+
+---
+
+## Suggested evaluation order (for judges)
+
+1. **Read** this pitch — you're here. *(3 min)*
+2. **Watch** `submission/boreal-demo.mp4` — the 4-minute demo. *(4 min)*
+3. **Open** `prototype/boreal-prototype.html` in a browser. Toggle EN ↔ FR. Click through both flows. Try typing a vague claim description and see the calibrated clarification screen. *(5 min)*
+4. **Skim** `agents/04-claim-prep-agent.md` — see the Ontario FDR logic and the bilingual templates. *(3 min)*
+5. **Skim** `context/context-studio-config.md` — see the terminology table that powers the bilingual moat. *(2 min)*
+
+**Total: 17 minutes to a complete picture.**
+
+---
+
+**Boréal — built on Bob. Pour vrai.**
+
+*TrueNorth AI Team · May 2026*
