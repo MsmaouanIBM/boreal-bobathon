@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boréal - AI Insurance Advisor</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='32,6 22,22 42,22' fill='%230F3D2E'/%3E%3Cpolygon points='32,18 18,36 46,36' fill='%230F3D2E'/%3E%3Cpolygon points='32,30 14,50 50,50' fill='%230F3D2E'/%3E%3Crect x='28' y='50' width='8' height='6' fill='%230F3D2E'/%3E%3Ccircle cx='50' cy='12' r='3.5' fill='%235AB8A8'/%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -12,19 +13,32 @@
             background-color: #F8F6F0;
             background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(15, 61, 46, 0.02) 35px, rgba(15, 61, 46, 0.02) 70px);
         }
-        .boreal-logo { font-size: 3rem; font-weight: 700; color: #0F3D2E; letter-spacing: -0.02em; }
+        .boreal-wordmark {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #0F3D2E;
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+        .boreal-header-wordmark {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0F3D2E;
+            letter-spacing: -0.02em;
+        }
         .fade-in { animation: fadeIn 0.5s ease-in; }
         .slide-up { animation: slideUp 0.5s ease-out; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .entry-card { border: 2px solid #E5E0D0; transition: all 0.3s ease; cursor: pointer; }
+        .entry-card { border: 2px solid #E5E0D0; transition: all 0.3s ease; cursor: pointer; background-color: white; }
         .entry-card:hover { border-color: #5AB8A8; transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15, 61, 46, 0.12); }
-        .upload-zone { border: 3px dashed #5AB8A8; transition: all 0.3s ease; }
-        .upload-zone:hover { border-color: #0F3D2E; background-color: rgba(90, 184, 168, 0.05); transform: scale(1.02); }
+        .upload-zone { border: 3px dashed #5AB8A8; transition: all 0.3s ease; cursor: pointer; }
+        .upload-zone:hover { border-color: #0F3D2E; background-color: rgba(90, 184, 168, 0.05); transform: scale(1.01); }
         .status-line { opacity: 0.3; transition: all 0.5s ease; }
         .status-line.active { opacity: 1; }
         .btn-primary { background-color: #0F3D2E; color: white; transition: all 0.3s ease; }
         .btn-primary:hover { background-color: #1A5A45; transform: translateY(-2px); }
+        .btn-primary:disabled { background-color: #C5C5C5; cursor: not-allowed; transform: none; }
         .btn-secondary { background-color: white; color: #0F3D2E; border: 2px solid #0F3D2E; transition: all 0.3s ease; }
         .btn-secondary:hover { background-color: #0F3D2E; color: white; }
         .btn-tertiary { background-color: transparent; color: #555; border: 1px solid #CCC; transition: all 0.2s ease; }
@@ -41,18 +55,29 @@
         .claim-section.fault { border-left-color: #D97757; }
         .claim-section.next-steps { border-left-color: #0F3D2E; }
         .checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; }
-        .checklist-icon { color: #5AB8A8; font-weight: bold; margin-top: 2px; }
+        .checklist-icon { color: #5AB8A8; font-weight: bold; margin-top: 2px; flex-shrink: 0; }
         .checklist-icon.warning { color: #D97757; }
         textarea { font-family: 'Inter', sans-serif; resize: none; }
         textarea:focus { outline: none; border-color: #5AB8A8; box-shadow: 0 0 0 3px rgba(90, 184, 168, 0.15); }
+        .file-preview { background-color: #F2EEDF; border: 1px solid #5AB8A8; }
+        .file-icon-bg { background-color: #E6F2EE; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
     <header class="border-b border-gray-200 bg-white/80 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <span class="text-2xl font-bold" style="color: #0F3D2E;">Boréal</span>
-                <span class="text-xs text-gray-500 hidden sm:inline" id="footer-text"></span>
+                <div onclick="resetApp()" class="flex items-center gap-3 cursor-pointer hover:opacity-75 transition-opacity" title="Home">
+                    <svg class="w-9 h-9" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="32,6 22,22 42,22" fill="#0F3D2E"/>
+                        <polygon points="32,18 18,36 46,36" fill="#0F3D2E"/>
+                        <polygon points="32,30 14,50 50,50" fill="#0F3D2E"/>
+                        <rect x="28" y="50" width="8" height="6" fill="#0F3D2E"/>
+                        <circle cx="50" cy="12" r="3.5" fill="#5AB8A8"/>
+                    </svg>
+                    <span class="boreal-header-wordmark">Boréal</span>
+                </div>
+                <span class="text-xs text-gray-500 hidden sm:inline ml-1" id="header-credit"></span>
             </div>
             <div class="flex gap-1 bg-gray-100 rounded-lg p-1">
                 <span class="lang-toggle active" data-lang="en" onclick="switchLanguage('en')">EN</span>
@@ -65,7 +90,7 @@
 
     <footer class="border-t border-gray-200 bg-white/60">
         <div class="max-w-7xl mx-auto px-6 py-3 text-center text-xs text-gray-500">
-            <span id="footer-text-bottom"></span>
+            <span id="footer-credit"></span>
         </div>
     </footer>
 
@@ -76,20 +101,48 @@
         let answers = { dependents: null, homeowner: null, commute: null };
         let claimDescription = '';
         let selectedScenario = 'rear-end';
+        let policyFileSelected = false;
+        let policyFileName = '';
+        let policyFileSize = '';
+
+        const BOREAL_LOGO_SVG = `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="32,6 22,22 42,22" fill="#0F3D2E"/>
+            <polygon points="32,18 18,36 46,36" fill="#0F3D2E"/>
+            <polygon points="32,30 14,50 50,50" fill="#0F3D2E"/>
+            <rect x="28" y="50" width="8" height="6" fill="#0F3D2E"/>
+            <circle cx="50" cy="12" r="3.5" fill="#5AB8A8"/>
+        </svg>`;
 
         const translations = {
             en: {
-                footer: 'Built on IBM Bob',
+                credit: 'Built on IBM Bob · TrueNorth AI Team',
                 tagline: 'Read your policy. Know your gaps. Get post-loss guidance. In your language.',
                 entryPolicyTitle: 'Review my policy',
                 entryPolicyDesc: 'Upload your auto policy. Boréal reads it, finds gaps, and gives you questions to ask your broker.',
                 entryClaimTitle: 'I just had an accident',
                 entryClaimDesc: 'Tell Boréal what happened. Get preliminary fault assessment, coverage path, and a step-by-step checklist for the next 24 hours.',
+                // Screen 9 — Upload
+                uploadTitle: 'Upload your auto policy',
+                uploadSubtitle: 'Boréal reads Ontario auto policies in English or French. Your file stays on your device — Boréal redacts personal information before any analysis.',
+                uploadDropText: 'Drop your policy here or click to browse',
+                uploadFormats: 'PDF · up to 10 MB',
+                uploadSelectedLabel: 'Selected file',
+                uploadReady: 'Ready to analyze',
+                uploadAnalyze: 'Analyze my policy →',
+                uploadReplace: 'Replace file',
+                uploadBack: '← Back',
+                uploadUseSample: 'Or use the sample policy →',
+                uploadSampleHint: 'Loads a fictional Ontario auto policy (Maple Mutual / Jean-Pierre Tremblay) — no real data.',
+                samplePolicyName: 'boreal-test-policy.pdf',
+                samplePolicySize: '8.7 KB · 3 pages',
+                pdfSizeFormat: (kb) => `${kb} KB`,
+                // Policy thinking
                 triageAgent: 'Triage Agent: detecting language and province...',
                 triageComplete: 'Ontario, English',
                 policyReader: 'Policy Reader Agent: extracting coverage...',
-                policyComplete: '3 pages parsed',
+                policyComplete: '3 pages parsed · PII redacted',
                 readyAnalysis: 'Ready for analysis',
+                // Policy at a glance
                 policyGlance: 'Your Policy at a Glance',
                 liability: 'Liability',
                 accidentBenefits: 'Accident Benefits',
@@ -103,12 +156,14 @@
                 yes: 'Yes',
                 no: 'No',
                 checkGaps: 'Check my coverage gaps →',
+                // Lifestyle
                 q1: 'Do you have dependents?',
                 q2: 'Do you own your home?',
                 q3: "What's your daily commute?",
                 urban: 'Urban',
                 suburban: 'Suburban',
                 highway: 'Highway',
+                // Gap report
                 gapReport: 'Coverage Gap Analysis',
                 covered: 'COVERED',
                 underProtected: 'UNDER-PROTECTED',
@@ -126,69 +181,78 @@
                 opcf44Why: 'Why: Highway commute exposes you to underinsured drivers. This endorsement protects you if you\'re hit by someone with low/no coverage.',
                 opcf44Question: 'Question for your broker: "What does it cost to add OPCF 44R to my policy?"',
                 disclaimer: 'Educational guidance only. Not a quote. Not legal advice. Consult your broker for purchasing decisions.',
+                // Claim intake
                 claimIntakeTitle: 'Tell Boréal what happened',
                 claimIntakeSubtitle: 'A few sentences are enough. Just the facts — when, where, how. Boréal will help from there.',
-                claimPlaceholder: 'Example: "Yesterday around 5 PM I was stopped at a red light on Bank Street when another driver rear-ended me. No injuries, but my rear bumper is dented. I have the other driver\'s info."',
+                claimPlaceholder: 'Example: \u201CYesterday around 5 PM I was stopped at a red light on Bank Street when another driver rear-ended me. No injuries, but my rear bumper is dented. I have the other driver\u2019s info.\u201D',
                 claimAnalyze: 'Get guidance →',
                 claimScenarioLabel: 'Or pick a common scenario:',
                 scenario1: 'I rear-ended someone at a red light',
-                scenario2: 'Someone hit me and drove off (hit-and-run)',
+                scenario2: 'I hit a deer on the highway',
                 scenario3: 'My car was vandalized in a parking lot',
                 claimBack: '← Back',
+                // Claim thinking
                 triageClaim: 'Triage Agent: classifying loss type...',
                 triageClaimComplete: 'Collision, English, Ontario',
+                triageClaimCompleteDeer: 'Animal strike, English, Ontario',
+                triageClaimCompleteVandal: 'Vandalism, English, Ontario',
                 claimPrepAgent: 'Claim Prep Agent: applying Ontario FDR principles...',
                 claimPrepComplete: 'Fault assessment + coverage path ready',
                 readyClaim: 'Building your action checklist',
+                // Claim recommendation
                 claimRecTitle: 'Your Boréal Claim Guidance',
                 whatHappened: "What I'm understanding",
                 lossType: 'Loss type:',
                 lossRearEnd: 'Rear-end collision (you struck another vehicle)',
-                lossHitRun: 'Hit-and-run (struck by unknown driver)',
-                lossVandalism: 'Vandalism (parking-lot incident)',
+                lossDeer: 'Animal strike (vehicle hit a deer or other animal)',
+                lossVandalism: 'Vandalism (parking-lot incident, no driver involved)',
                 faultAssessment: 'Preliminary fault assessment',
                 faultRearEnd: 'In Ontario, the following driver in a rear-end collision is typically considered 100% at fault, regardless of whether the lead vehicle stopped suddenly. The exception is if the lead vehicle was reversing.',
-                faultHitRun: 'You are not at fault. The coverage path depends on whether the other vehicle can be identified.',
-                faultVandalism: 'No driver fault — this is a Comprehensive coverage scenario.',
-                faultDisclaimer: "This is preliminary. Your insurer makes the official determination using Ontario's Fault Determination Rules. They have access to police reports and the other driver's statement — you don't yet.",
+                faultDeer: 'No driver fault assigned. Animal strikes in Ontario are classified as Comprehensive events — not Collision — even though there was an impact. Your insurer will not consider this an at-fault accident, and your premium typically does not increase.',
+                faultDeerCaveat: 'CRITICAL CAVEAT: If you SWERVED to avoid the deer and hit something else (a tree, another vehicle, a ditch), insurers reclassify it as a Collision claim — and you may be found at fault. Be precise with your insurer about whether you impacted the animal or swerved.',
+                faultVandalism: 'No driver fault — there was no collision and no driver decision involved. Vandalism is a Comprehensive coverage event in Ontario.',
+                faultDisclaimer: "This is preliminary. Your insurer makes the official determination using Ontario's Fault Determination Rules.",
                 coverageApplies: 'Which coverage likely applies',
                 coverageRearEnd: 'Primary path: Section C — Collision. Your $500 deductible applies. OPCF 39 (Accident Waiver) is on your policy, so this may not affect premium at renewal.',
-                coverageHitRun: 'Primary path: DCPD (Direct Compensation) if the other vehicle is identified. Otherwise Uninsured Automobile Coverage. No deductible applies under Section E.',
-                coverageVandalism: 'Primary path: Comprehensive coverage. Your $300 deductible applies.',
+                coverageDeer: 'Primary path: Comprehensive coverage. Your $300 deductible applies. Comprehensive claims in Ontario typically do not increase your premium. Towing is usually covered if your vehicle is undriveable.',
+                coverageVandalism: 'Primary path: Comprehensive coverage. Your $300 deductible applies. Vandalism claims do not affect your at-fault record.',
                 nextSteps: 'Your next 24 hours',
                 stepRightNow: 'Right now',
-                stepRightNow1: 'Take photos: all 4 corners of both vehicles, license plates, damage close-ups, road and intersection',
-                stepRightNow2: "Exchange info with the other driver: name, license, insurer, policy number, phone",
-                stepRightNow3: 'Get name + phone of any witnesses',
-                stepRightNowWarn: 'Do NOT admit fault or apologize for the accident. "I\'m sorry" is an admission.',
                 stepWithin24h: 'Within 24 hours',
-                stepWithin24h1: "Call your insurer's claims line (24/7). Have your policy number, the other driver's info, photos, and accident time/location ready.",
-                stepWithin24h2: 'If damage > $2,000 or any injuries: report to a Collision Reporting Centre (Ontario requirement).',
-                stepWithin24h3: 'See a doctor if you feel any pain or discomfort, even if minor.',
                 stepThisWeek: 'This week',
                 stepThisWeek1: "Get a claim number — you'll need it for every follow-up",
                 stepThisWeek2: "Get your adjuster's direct contact",
                 stepThisWeek3: 'Ask about a rental vehicle (you have OPCF 20)',
                 stepThisWeek4: 'Keep every receipt: medical, towing, rental, repair',
                 smartQuestions: 'Smart questions to ask your adjuster',
-                question1: '"What\'s my deductible for this claim?"',
-                question2: '"Will this affect my premium at renewal? Does OPCF 39 apply?"',
-                question3: '"How many rental days am I covered for under OPCF 20?"',
-                question4: '"What\'s the expected timeline for the claim decision?"',
                 claimDisclaimer: 'Boréal provides educational guidance only. This is not a quote, legal advice, or a substitute for a licensed broker or lawyer. Your insurer makes all final claim decisions.',
                 startOver: '← Start over'
             },
             fr: {
-                footer: 'Propulsé par IBM Bob',
+                credit: "Propulsé par IBM Bob · Équipe TrueNorth AI",
                 tagline: "Lisez votre police. Connaissez vos écarts. Recevez des conseils après sinistre. Dans votre langue.",
                 entryPolicyTitle: 'Examiner ma police',
                 entryPolicyDesc: "Téléversez votre police auto. Boréal la lit, trouve les écarts et vous donne les bonnes questions à poser à votre courtier.",
                 entryClaimTitle: "Je viens d'avoir un accident",
                 entryClaimDesc: "Racontez à Boréal ce qui s'est passé. Obtenez une évaluation préliminaire de la responsabilité, la garantie applicable et une liste d'étapes pour les 24 prochaines heures.",
+                uploadTitle: 'Téléversez votre police auto',
+                uploadSubtitle: "Boréal lit les polices auto de l'Ontario en français ou en anglais. Votre fichier reste sur votre appareil — Boréal expurge les renseignements personnels avant toute analyse.",
+                uploadDropText: 'Déposez votre police ici ou cliquez pour parcourir',
+                uploadFormats: 'PDF · jusqu\'à 10 Mo',
+                uploadSelectedLabel: 'Fichier sélectionné',
+                uploadReady: 'Prêt à analyser',
+                uploadAnalyze: 'Analyser ma police →',
+                uploadReplace: 'Changer de fichier',
+                uploadBack: '← Retour',
+                uploadUseSample: "Ou utiliser la police d'échantillon →",
+                uploadSampleHint: "Charge une police auto ontarienne fictive (Maple Mutual / Jean-Pierre Tremblay) — aucune donnée réelle.",
+                samplePolicyName: 'boreal-test-policy.pdf',
+                samplePolicySize: '8,7 Ko · 3 pages',
+                pdfSizeFormat: (kb) => `${kb.replace('.', ',')} Ko`,
                 triageAgent: 'Agent de triage : détection de la langue et de la province...',
                 triageComplete: 'Ontario, anglais',
                 policyReader: 'Agent de lecture : extraction de la garantie...',
-                policyComplete: '3 pages analysées',
+                policyComplete: '3 pages analysées · RPI expurgés',
                 readyAnalysis: "Prêt pour l'analyse",
                 policyGlance: "Votre police en un coup d'œil",
                 liability: 'Responsabilité civile',
@@ -223,7 +287,7 @@
                 abConcern: "Préoccupation : Le niveau Standard plafonne le remplacement de revenu à 400 $/sem. Avec 2 personnes à charge, les Indemnités bonifiées augmentent ce montant et ajoutent des prestations d'aidant.",
                 abQuestion: 'Question pour votre courtier : « Quelle est la différence de coût entre les Indemnités Standard et les Bonifiées ? »',
                 opcf44Title: 'Avenant FPQ n° 44R (Protection familiale)',
-                opcf44Why: 'Pourquoi : Les trajets sur autoroute vous exposent à des conducteurs sous-assurés. Cet avenant vous protège si vous êtes frappé par quelqu\'un avec peu ou pas de garantie.',
+                opcf44Why: "Pourquoi : Les trajets sur autoroute vous exposent à des conducteurs sous-assurés. Cet avenant vous protège si vous êtes frappé par quelqu'un avec peu ou pas de garantie.",
                 opcf44Question: "Question pour votre courtier : « Combien coûte l'ajout de l'avenant FPQ n° 44R à ma police ? »",
                 disclaimer: "Conseils éducatifs uniquement. Ceci n'est ni une soumission, ni un avis juridique. Consultez votre courtier pour toute décision d'achat.",
                 claimIntakeTitle: "Racontez à Boréal ce qui s'est passé",
@@ -232,11 +296,13 @@
                 claimAnalyze: 'Obtenir des conseils →',
                 claimScenarioLabel: 'Ou choisissez un scénario courant :',
                 scenario1: "J'ai heurté quelqu'un par l'arrière à un feu rouge",
-                scenario2: "Quelqu'un m'a frappé et a pris la fuite",
+                scenario2: "J'ai heurté un chevreuil sur l'autoroute",
                 scenario3: 'Mon véhicule a été vandalisé dans un stationnement',
                 claimBack: '← Retour',
                 triageClaim: 'Agent de triage : classification du sinistre...',
                 triageClaimComplete: 'Collision, français, Ontario',
+                triageClaimCompleteDeer: 'Collision avec un animal, français, Ontario',
+                triageClaimCompleteVandal: 'Vandalisme, français, Ontario',
                 claimPrepAgent: 'Agent de réclamation : application des Règles de détermination de la responsabilité...',
                 claimPrepComplete: 'Évaluation de la responsabilité + garantie applicable prêtes',
                 readyClaim: "Préparation de votre liste d'actions",
@@ -244,47 +310,172 @@
                 whatHappened: 'Ce que je comprends',
                 lossType: 'Type de sinistre :',
                 lossRearEnd: 'Collision arrière (vous avez heurté un autre véhicule)',
-                lossHitRun: 'Délit de fuite (heurté par un conducteur inconnu)',
-                lossVandalism: 'Vandalisme (incident en stationnement)',
+                lossDeer: "Collision avec un animal (véhicule a heurté un chevreuil ou autre animal)",
+                lossVandalism: 'Vandalisme (incident en stationnement, aucun conducteur impliqué)',
                 faultAssessment: 'Évaluation préliminaire de la responsabilité',
                 faultRearEnd: "En Ontario, le conducteur arrière dans une collision par l'arrière est généralement considéré 100 % responsable, peu importe si le véhicule avant s'est arrêté brusquement. L'exception est si le véhicule avant reculait.",
-                faultHitRun: "Vous n'êtes pas responsable. La garantie applicable dépend de la possibilité d'identifier l'autre véhicule.",
-                faultVandalism: "Aucune responsabilité du conducteur — il s'agit d'un scénario de garantie Risques multiples.",
-                faultDisclaimer: "Ceci est préliminaire. Votre assureur fait la détermination officielle en utilisant les Règles de détermination de la responsabilité de l'Ontario. Ils ont accès aux rapports de police et à la déclaration de l'autre conducteur — pas vous, pour l'instant.",
+                faultDeer: "Aucune responsabilité du conducteur. Les collisions avec un animal en Ontario sont classées comme événements Risques multiples — pas Collision — même s'il y a eu un impact. Votre assureur ne considérera pas cela comme un accident avec responsabilité, et votre prime n'augmente généralement pas.",
+                faultDeerCaveat: "MISE EN GARDE CRITIQUE : Si vous avez fait une EMBARDÉE pour éviter le chevreuil et heurté autre chose (un arbre, un autre véhicule, un fossé), les assureurs reclassent l'événement comme une réclamation Collision — et vous pourriez être tenu responsable. Soyez précis avec votre assureur : avez-vous heurté l'animal ou fait une embardée ?",
+                faultVandalism: "Aucune responsabilité du conducteur — il n'y a eu ni collision ni décision du conducteur. Le vandalisme est un événement de garantie Risques multiples en Ontario.",
+                faultDisclaimer: "Ceci est préliminaire. Votre assureur fait la détermination officielle en utilisant les Règles de détermination de la responsabilité de l'Ontario.",
                 coverageApplies: "Quelle garantie s'applique probablement",
                 coverageRearEnd: "Garantie principale : Section C — Collision. Votre franchise de 500 $ s'applique. L'avenant FPQ n° 39 (Renonciation à la majoration) est sur votre police, donc votre prime ne devrait pas être affectée au renouvellement.",
-                coverageHitRun: "Garantie principale : IDDM (Indemnisation directe pour dommages matériels) si l'autre véhicule est identifié. Sinon, garantie des véhicules non assurés. Aucune franchise sous la Section E.",
-                coverageVandalism: "Garantie principale : Risques multiples. Votre franchise de 300 $ s'applique.",
+                coverageDeer: "Garantie principale : Risques multiples. Votre franchise de 300 $ s'applique. Les réclamations Risques multiples en Ontario n'augmentent généralement pas votre prime. Le remorquage est habituellement couvert si votre véhicule est inutilisable.",
+                coverageVandalism: "Garantie principale : Risques multiples. Votre franchise de 300 $ s'applique. Les réclamations pour vandalisme n'affectent pas votre dossier de responsabilité.",
                 nextSteps: 'Vos 24 prochaines heures',
                 stepRightNow: 'Tout de suite',
-                stepRightNow1: 'Prenez des photos : 4 coins des deux véhicules, plaques, gros plans des dommages, route et intersection',
-                stepRightNow2: "Échangez les informations avec l'autre conducteur : nom, permis, assureur, n° de police, téléphone",
-                stepRightNow3: 'Notez le nom + téléphone de tout témoin',
-                stepRightNowWarn: "N'admettez PAS la responsabilité et ne vous excusez pas pour l'accident. « Je suis désolé » est un aveu.",
                 stepWithin24h: 'Dans les 24 heures',
-                stepWithin24h1: "Appelez la ligne de réclamations de votre assureur (24/7). Ayez votre n° de police, les informations de l'autre conducteur, les photos et l'heure/lieu de l'accident prêts.",
-                stepWithin24h2: 'Si dommages > 2 000 $ ou blessures : déclarez à un Centre de déclaration des collisions (exigence ontarienne).',
-                stepWithin24h3: 'Consultez un médecin si vous ressentez la moindre douleur, même mineure.',
                 stepThisWeek: 'Cette semaine',
                 stepThisWeek1: "Obtenez un numéro de réclamation — vous en aurez besoin pour chaque suivi",
                 stepThisWeek2: 'Obtenez les coordonnées directes de votre expert en sinistre',
                 stepThisWeek3: "Renseignez-vous sur un véhicule de remplacement (vous avez l'avenant FPQ n° 20)",
                 stepThisWeek4: 'Conservez tous les reçus : médical, remorquage, location, réparation',
                 smartQuestions: 'Questions intelligentes à poser à votre expert',
-                question1: '« Quelle est ma franchise pour cette réclamation ? »',
-                question2: "« Est-ce que cela affectera ma prime au renouvellement ? L'avenant FPQ n° 39 s'applique-t-il ? »",
-                question3: "« Combien de jours de location suis-je couvert sous l'avenant FPQ n° 20 ? »",
-                question4: '« Quel est le délai prévu pour la décision sur la réclamation ? »',
                 claimDisclaimer: "Boréal offre des conseils éducatifs uniquement. Ceci n'est ni une soumission, ni un avis juridique, ni un substitut à un courtier licencié ou un avocat. Votre assureur prend toutes les décisions finales sur la réclamation.",
                 startOver: '← Recommencer'
             }
         };
 
-        function t(key) { return translations[currentLanguage][key] || key; }
+        // Scenario-specific checklists and questions
+        const scenarioData = {
+            'rear-end': {
+                rightNow: {
+                    en: [
+                        { text: 'Take photos: all 4 corners of both vehicles, license plates, damage close-ups, road and intersection', warn: false },
+                        { text: "Exchange info with the other driver: name, license, insurer, policy number, phone", warn: false },
+                        { text: 'Get name + phone of any witnesses', warn: false },
+                        { text: 'Do NOT admit fault or apologize for the accident. "I\'m sorry" is an admission.', warn: true }
+                    ],
+                    fr: [
+                        { text: 'Prenez des photos : 4 coins des deux véhicules, plaques, gros plans des dommages, route et intersection', warn: false },
+                        { text: "Échangez les informations avec l'autre conducteur : nom, permis, assureur, n° de police, téléphone", warn: false },
+                        { text: 'Notez le nom + téléphone de tout témoin', warn: false },
+                        { text: "N'admettez PAS la responsabilité et ne vous excusez pas pour l'accident. « Je suis désolé » est un aveu.", warn: true }
+                    ]
+                },
+                within24h: {
+                    en: [
+                        "Call your insurer's claims line (24/7). Have your policy number, the other driver's info, photos, and accident time/location ready.",
+                        'If damage > $2,000 or any injuries: report to a Collision Reporting Centre (Ontario requirement).',
+                        'See a doctor if you feel any pain or discomfort, even if minor.'
+                    ],
+                    fr: [
+                        "Appelez la ligne de réclamations de votre assureur (24/7). Ayez votre n° de police, les informations de l'autre conducteur, les photos et l'heure/lieu de l'accident prêts.",
+                        'Si dommages > 2 000 $ ou blessures : déclarez à un Centre de déclaration des collisions (exigence ontarienne).',
+                        'Consultez un médecin si vous ressentez la moindre douleur, même mineure.'
+                    ]
+                },
+                questions: {
+                    en: [
+                        '"What\'s my deductible for this claim?"',
+                        '"Will this affect my premium at renewal? Does OPCF 39 apply?"',
+                        '"How many rental days am I covered for under OPCF 20?"',
+                        '"What\'s the expected timeline for the claim decision?"'
+                    ],
+                    fr: [
+                        '« Quelle est ma franchise pour cette réclamation ? »',
+                        "« Est-ce que cela affectera ma prime au renouvellement ? L'avenant FPQ n° 39 s'applique-t-il ? »",
+                        "« Combien de jours de location suis-je couvert sous l'avenant FPQ n° 20 ? »",
+                        '« Quel est le délai prévu pour la décision sur la réclamation ? »'
+                    ]
+                }
+            },
+            'deer': {
+                rightNow: {
+                    en: [
+                        'If safe, pull over and turn on hazard lights. Stay in the vehicle if traffic is moving.',
+                        'Take photos: vehicle damage from all angles, the animal (if present), the road, weather and lighting conditions',
+                        'Note the time, exact location (km marker if highway), and direction of travel',
+                        'Do NOT approach or touch an injured animal. Call the Ontario Provincial Police or local wildlife services if needed.',
+                        'If you SWERVED instead of impacting the deer, your claim will be classified as Collision — be precise with your insurer.'
+                    ],
+                    fr: [
+                        "Si possible en toute sécurité, garez-vous et activez vos feux de détresse. Restez dans le véhicule si la circulation est dense.",
+                        "Prenez des photos : dommages au véhicule sous tous les angles, l'animal (s'il est présent), la route, conditions météorologiques et d'éclairage",
+                        "Notez l'heure, l'emplacement exact (borne kilométrique sur autoroute) et la direction",
+                        "N'approchez PAS et ne touchez PAS un animal blessé. Appelez la Police provinciale de l'Ontario ou les services fauniques si nécessaire.",
+                        "Si vous avez fait une EMBARDÉE au lieu de heurter le chevreuil, votre réclamation sera classée comme Collision — soyez précis avec votre assureur."
+                    ]
+                },
+                within24h: {
+                    en: [
+                        "Call your insurer's claims line. Make clear: 'I hit an animal' (Comprehensive). Have time, location, conditions ready.",
+                        'Report to police if your vehicle is undriveable, or if the animal carcass is blocking the road.',
+                        'Inspect for hidden damage: fluid leaks, radiator/cooling system, undercarriage. Drive only if clearly safe.'
+                    ],
+                    fr: [
+                        "Appelez la ligne de réclamations de votre assureur. Précisez : « J'ai heurté un animal » (Risques multiples). Ayez l'heure, le lieu et les conditions prêts.",
+                        "Signalez à la police si votre véhicule est inutilisable ou si la carcasse bloque la route.",
+                        "Inspectez les dommages cachés : fuites de liquides, radiateur/refroidissement, châssis. Ne conduisez que si c'est clairement sûr."
+                    ]
+                },
+                questions: {
+                    en: [
+                        '"This was an animal strike — please confirm it\'s coded as Comprehensive, not Collision."',
+                        '"Will my premium increase from this claim?"',
+                        '"How many rental days am I covered for under OPCF 20?"',
+                        '"Is towing from the scene covered by my policy?"'
+                    ],
+                    fr: [
+                        "« Il s'agissait d'une collision avec un animal — confirmez svp que la réclamation est codée Risques multiples, non Collision. »",
+                        '« Ma prime augmentera-t-elle suite à cette réclamation ? »',
+                        "« Combien de jours de location suis-je couvert sous l'avenant FPQ n° 20 ? »",
+                        '« Le remorquage depuis les lieux est-il couvert par ma police ? »'
+                    ]
+                }
+            },
+            'vandalism': {
+                rightNow: {
+                    en: [
+                        'Take photos: every angle of the damage, license plate, parking position, surrounding area including nearby vehicles',
+                        'Look for security cameras: parking lot, building, neighboring properties, doorbells. Note their location.',
+                        'Note the time you parked and the time you discovered the damage. This window matters for the police report.',
+                        'Do NOT clean or repair anything before your insurer or police see it (or you have full photo documentation).'
+                    ],
+                    fr: [
+                        "Prenez des photos : chaque angle des dommages, plaque d'immatriculation, position de stationnement, environnement incluant les véhicules voisins",
+                        "Cherchez des caméras de surveillance : stationnement, bâtiment, propriétés voisines, sonnettes vidéo. Notez leur emplacement.",
+                        "Notez l'heure de stationnement et l'heure de découverte des dommages. Cette fenêtre compte pour le rapport de police.",
+                        "Ne nettoyez et ne réparez RIEN avant que votre assureur ou la police le voient (ou que vous ayez une documentation photo complète)."
+                    ]
+                },
+                within24h: {
+                    en: [
+                        'File a police report — most Ontario insurers REQUIRE this for vandalism claims. Get the report number.',
+                        "Call your insurer's claims line. Have photos, police report number, time window, and any witness info ready.",
+                        'Get a repair estimate from an auto body shop — your insurer may direct you to a preferred network.'
+                    ],
+                    fr: [
+                        "Faites un rapport de police — la plupart des assureurs ontariens l'EXIGENT pour les réclamations de vandalisme. Obtenez le numéro de rapport.",
+                        "Appelez la ligne de réclamations de votre assureur. Ayez les photos, le numéro de rapport de police, la fenêtre horaire et les infos de témoins prêts.",
+                        "Obtenez une estimation de réparation dans un atelier de carrosserie — votre assureur peut vous diriger vers un réseau préféré."
+                    ]
+                },
+                questions: {
+                    en: [
+                        '"Is a police report required to process this Comprehensive claim?"',
+                        '"What\'s my Comprehensive deductible for this claim?"',
+                        '"Will this vandalism claim affect my premium at renewal?"',
+                        '"How long do I have to file the claim from the date of discovery?"'
+                    ],
+                    fr: [
+                        '« Un rapport de police est-il requis pour traiter cette réclamation Risques multiples ? »',
+                        '« Quelle est ma franchise Risques multiples pour cette réclamation ? »',
+                        '« Cette réclamation de vandalisme affectera-t-elle ma prime au renouvellement ? »',
+                        '« Combien de temps ai-je pour soumettre la réclamation à partir de la date de découverte ? »'
+                    ]
+                }
+            }
+        };
+
+        function t(key) {
+            const val = translations[currentLanguage][key];
+            return (val !== undefined) ? val : key;
+        }
 
         function updateChrome() {
-            document.getElementById('footer-text').textContent = t('footer');
-            document.getElementById('footer-text-bottom').textContent = t('footer');
+            document.getElementById('header-credit').textContent = t('credit');
+            document.getElementById('footer-credit').textContent = t('credit');
         }
 
         function switchLanguage(lang) {
@@ -296,10 +487,47 @@
             renderScreen(currentScreen);
         }
 
+        function startPolicyFlow() {
+            // Reset upload state, go to upload screen
+            policyFileSelected = false;
+            policyFileName = '';
+            policyFileSize = '';
+            renderScreen(9);
+        }
+
+        function triggerFilePicker() {
+            const input = document.getElementById('policy-file-input');
+            if (input) input.click();
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            policyFileName = file.name;
+            const kb = (file.size / 1024).toFixed(1);
+            policyFileSize = translations[currentLanguage].pdfSizeFormat(kb);
+            policyFileSelected = true;
+            renderScreen(9);
+        }
+
+        function useSamplePolicy() {
+            policyFileName = t('samplePolicyName');
+            policyFileSize = t('samplePolicySize');
+            policyFileSelected = true;
+            renderScreen(9);
+        }
+
+        function resetUpload() {
+            policyFileSelected = false;
+            policyFileName = '';
+            policyFileSize = '';
+            renderScreen(9);
+        }
+
         function selectScenario(scenario) {
             selectedScenario = scenario;
             if (scenario === 'rear-end') claimDescription = t('scenario1');
-            else if (scenario === 'hit-run') claimDescription = t('scenario2');
+            else if (scenario === 'deer') claimDescription = t('scenario2');
             else if (scenario === 'vandalism') claimDescription = t('scenario3');
             renderScreen(7);
         }
@@ -309,12 +537,12 @@
             const text = textarea ? textarea.value.trim() : '';
             claimDescription = text;
             const lower = text.toLowerCase();
-            if (lower.includes('rear') || lower.includes('arrière') || lower.includes('feu') || lower.includes('red light')) {
-                selectedScenario = 'rear-end';
-            } else if ((lower.includes('hit') && (lower.includes('run') || lower.includes('flee') || lower.includes('drove off'))) || lower.includes('fuite') || lower.includes('hit-and-run')) {
-                selectedScenario = 'hit-run';
-            } else if (lower.includes('vandal') || lower.includes('keyed') || lower.includes('parking')) {
+            if (lower.includes('deer') || lower.includes('chevreuil') || lower.includes('animal') || lower.includes('moose') || lower.includes('orignal')) {
+                selectedScenario = 'deer';
+            } else if (lower.includes('vandal') || lower.includes('keyed') || lower.includes('vandalis')) {
                 selectedScenario = 'vandalism';
+            } else if (lower.includes('rear') || lower.includes('arrière') || lower.includes('feu') || lower.includes('red light')) {
+                selectedScenario = 'rear-end';
             } else {
                 selectedScenario = 'rear-end';
             }
@@ -327,7 +555,19 @@
             answers = { dependents: null, homeowner: null, commute: null };
             claimDescription = '';
             selectedScenario = 'rear-end';
+            policyFileSelected = false;
+            policyFileName = '';
+            policyFileSize = '';
             renderScreen(1);
+        }
+
+        function renderChecklistItems(items) {
+            return items.map(item => {
+                if (typeof item === 'string') {
+                    return `<div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${item}</span></div>`;
+                }
+                return `<div class="checklist-item"><span class="checklist-icon ${item.warn ? 'warning' : ''}">${item.warn ? '⚠' : '✓'}</span><span class="text-sm text-gray-700">${item.warn ? `<strong>${item.text}</strong>` : item.text}</span></div>`;
+            }).join('');
         }
 
         function renderScreen(screenNum) {
@@ -338,10 +578,19 @@
                 case 1:
                     app.innerHTML = `
                         <div class="max-w-4xl w-full text-center fade-in">
-                            <div class="boreal-logo mb-4">Boréal</div>
+                            <div class="mb-4 flex justify-center">
+                                <svg class="w-20 h-20" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="32,6 22,22 42,22" fill="#0F3D2E"/>
+                                    <polygon points="32,18 18,36 46,36" fill="#0F3D2E"/>
+                                    <polygon points="32,30 14,50 50,50" fill="#0F3D2E"/>
+                                    <rect x="28" y="50" width="8" height="6" fill="#0F3D2E"/>
+                                    <circle cx="50" cy="12" r="3.5" fill="#5AB8A8"/>
+                                </svg>
+                            </div>
+                            <div class="boreal-wordmark mb-3">Boréal</div>
                             <p class="text-xl text-gray-600 mb-10">${t('tagline')}</p>
                             <div class="grid md:grid-cols-2 gap-6">
-                                <div class="entry-card bg-white rounded-2xl p-8 text-left" onclick="renderScreen(2)">
+                                <div class="entry-card rounded-2xl p-8 text-left" onclick="startPolicyFlow()">
                                     <div class="flex items-center gap-3 mb-4">
                                         <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background-color: #E6F2EE;">
                                             <svg class="w-7 h-7" style="color: #0F3D2E;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -352,7 +601,7 @@
                                     </div>
                                     <p class="text-gray-600 text-sm leading-relaxed">${t('entryPolicyDesc')}</p>
                                 </div>
-                                <div class="entry-card bg-white rounded-2xl p-8 text-left" onclick="renderScreen(6)">
+                                <div class="entry-card rounded-2xl p-8 text-left" onclick="renderScreen(6)">
                                     <div class="flex items-center gap-3 mb-4">
                                         <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background-color: #FBEEE6;">
                                             <svg class="w-7 h-7" style="color: #D97757;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -376,7 +625,7 @@
                     app.innerHTML = `
                         <div class="max-w-3xl w-full slide-up">
                             <h2 class="text-3xl font-bold text-gray-900 mb-2 text-center">${t('policyGlance')}</h2>
-                            <p class="text-center text-sm text-gray-500 mb-8">Maple Mutual Insurance · AUT-ON-2026-00042-MM</p>
+                            <p class="text-center text-sm text-gray-500 mb-8">Insured: <span class="font-medium text-gray-700">Jean-Pierre Tremblay</span> · Maple Mutual Insurance · AUT-ON-2026-00042-MM</p>
                             <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
                                 <div class="grid sm:grid-cols-2 gap-4">
                                     <div class="border-b sm:border-b-0 sm:border-r border-gray-100 pr-4 pb-3 sm:pb-0">
@@ -472,7 +721,7 @@
                             <div class="text-sm text-gray-500 mb-3">${t('claimScenarioLabel')}</div>
                             <div class="flex flex-wrap gap-3">
                                 <span class="scenario-chip px-4 py-2 rounded-full text-sm" onclick="selectScenario('rear-end')">${t('scenario1')}</span>
-                                <span class="scenario-chip px-4 py-2 rounded-full text-sm" onclick="selectScenario('hit-run')">${t('scenario2')}</span>
+                                <span class="scenario-chip px-4 py-2 rounded-full text-sm" onclick="selectScenario('deer')">${t('scenario2')}</span>
                                 <span class="scenario-chip px-4 py-2 rounded-full text-sm" onclick="selectScenario('vandalism')">${t('scenario3')}</span>
                             </div>
                         </div>
@@ -485,14 +734,23 @@
 
                 case 8:
                     const lossLabel = selectedScenario === 'rear-end' ? t('lossRearEnd')
-                                    : selectedScenario === 'hit-run' ? t('lossHitRun')
+                                    : selectedScenario === 'deer' ? t('lossDeer')
                                     : t('lossVandalism');
                     const faultText = selectedScenario === 'rear-end' ? t('faultRearEnd')
-                                    : selectedScenario === 'hit-run' ? t('faultHitRun')
+                                    : selectedScenario === 'deer' ? t('faultDeer')
                                     : t('faultVandalism');
                     const coverageText = selectedScenario === 'rear-end' ? t('coverageRearEnd')
-                                       : selectedScenario === 'hit-run' ? t('coverageHitRun')
+                                       : selectedScenario === 'deer' ? t('coverageDeer')
                                        : t('coverageVandalism');
+                    const deerCaveatHtml = selectedScenario === 'deer'
+                        ? `<div class="bg-orange-50 border-l-4 border-orange-400 rounded-r-lg p-3 mt-3">
+                              <p class="text-xs text-gray-800"><strong>${t('faultDeerCaveat')}</strong></p>
+                           </div>`
+                        : '';
+                    const rightNowItems = scenarioData[selectedScenario].rightNow[currentLanguage];
+                    const within24hItems = scenarioData[selectedScenario].within24h[currentLanguage];
+                    const questions = scenarioData[selectedScenario].questions[currentLanguage];
+
                     app.innerHTML = `
                         <div class="max-w-4xl w-full slide-up">
                             <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">${t('claimRecTitle')}</h2>
@@ -503,7 +761,8 @@
                             <div class="bg-white rounded-2xl shadow-xl p-6 mb-5 claim-section fault">
                                 <h3 class="text-lg font-bold text-gray-900 mb-3">⚖️ ${t('faultAssessment')}</h3>
                                 <p class="text-gray-700 leading-relaxed mb-3">${faultText}</p>
-                                <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-lg p-3">
+                                ${deerCaveatHtml}
+                                <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-lg p-3 mt-3">
                                     <p class="text-xs text-gray-700"><strong>Important:</strong> ${t('faultDisclaimer')}</p>
                                 </div>
                             </div>
@@ -515,20 +774,11 @@
                                 <h3 class="text-lg font-bold text-gray-900 mb-4">⏱️ ${t('nextSteps')}</h3>
                                 <div class="mb-5">
                                     <h4 class="font-semibold text-gray-900 mb-2">${t('stepRightNow')}</h4>
-                                    <div class="space-y-1">
-                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepRightNow1')}</span></div>
-                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepRightNow2')}</span></div>
-                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepRightNow3')}</span></div>
-                                        <div class="checklist-item"><span class="checklist-icon warning">⚠</span><span class="text-sm text-gray-700"><strong>${t('stepRightNowWarn')}</strong></span></div>
-                                    </div>
+                                    <div class="space-y-1">${renderChecklistItems(rightNowItems)}</div>
                                 </div>
                                 <div class="mb-5">
                                     <h4 class="font-semibold text-gray-900 mb-2">${t('stepWithin24h')}</h4>
-                                    <div class="space-y-1">
-                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepWithin24h1')}</span></div>
-                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepWithin24h2')}</span></div>
-                                        <div class="checklist-item"><span class="checklist-icon">✓</span><span class="text-sm text-gray-700">${t('stepWithin24h3')}</span></div>
-                                    </div>
+                                    <div class="space-y-1">${renderChecklistItems(within24hItems)}</div>
                                 </div>
                                 <div>
                                     <h4 class="font-semibold text-gray-900 mb-2">${t('stepThisWeek')}</h4>
@@ -543,10 +793,7 @@
                             <div class="bg-white rounded-2xl shadow-xl p-6 mb-5">
                                 <h3 class="text-lg font-bold text-gray-900 mb-3">❓ ${t('smartQuestions')}</h3>
                                 <div class="space-y-2">
-                                    <p class="text-sm text-blue-700 italic">${t('question1')}</p>
-                                    <p class="text-sm text-blue-700 italic">${t('question2')}</p>
-                                    <p class="text-sm text-blue-700 italic">${t('question3')}</p>
-                                    <p class="text-sm text-blue-700 italic">${t('question4')}</p>
+                                    ${questions.map(q => `<p class="text-sm text-blue-700 italic">${q}</p>`).join('')}
                                 </div>
                             </div>
                             <div class="bg-amber-50 border-l-4 border-amber-400 rounded-xl p-6 mb-6">
@@ -558,17 +805,68 @@
                         </div>
                     `;
                     break;
+
+                case 9:
+                    // Policy upload screen
+                    const uploadInner = policyFileSelected
+                        ? `<div class="file-preview rounded-xl p-6 flex items-center gap-4">
+                              <div class="file-icon-bg w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0">
+                                  <svg class="w-8 h-8" style="color: #0F3D2E;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                  </svg>
+                              </div>
+                              <div class="flex-1 min-w-0">
+                                  <p class="font-semibold text-gray-900 truncate">${policyFileName}</p>
+                                  <p class="text-xs text-gray-600">${policyFileSize}</p>
+                                  <p class="text-xs mt-1" style="color: #0F3D2E;"><span class="inline-block w-2 h-2 rounded-full bg-green-500 mr-1"></span>${t('uploadReady')}</p>
+                              </div>
+                              <button onclick="resetUpload()" class="text-xs text-gray-500 hover:text-gray-900 underline flex-shrink-0">${t('uploadReplace')}</button>
+                           </div>
+                           <div class="mt-6 text-right">
+                              <button onclick="renderScreen(2)" class="btn-primary px-8 py-3 rounded-xl font-semibold">${t('uploadAnalyze')}</button>
+                           </div>`
+                        : `<div class="upload-zone rounded-xl p-12 text-center" onclick="triggerFilePicker()">
+                              <svg class="w-16 h-16 mx-auto mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                              </svg>
+                              <p class="text-lg font-medium text-gray-700 mb-1">${t('uploadDropText')}</p>
+                              <p class="text-sm text-gray-500">${t('uploadFormats')}</p>
+                           </div>
+                           <input type="file" id="policy-file-input" accept=".pdf,application/pdf" style="display:none" onchange="handleFileSelect(event)">
+                           <div class="mt-5 text-center">
+                              <button onclick="useSamplePolicy()" class="text-sm font-medium underline" style="color: #0F3D2E;">${t('uploadUseSample')}</button>
+                              <p class="text-xs text-gray-500 mt-1">${t('uploadSampleHint')}</p>
+                           </div>`;
+
+                    app.innerHTML = `
+                        <div class="max-w-2xl w-full slide-up">
+                            <div class="mb-4">
+                                <button onclick="renderScreen(1)" class="text-sm text-gray-500 hover:text-gray-900">${t('uploadBack')}</button>
+                            </div>
+                            <h2 class="text-3xl font-bold text-gray-900 mb-3 text-center">${t('uploadTitle')}</h2>
+                            <p class="text-center text-gray-600 mb-8 text-sm leading-relaxed">${t('uploadSubtitle')}</p>
+                            <div class="bg-white rounded-2xl shadow-xl p-8">
+                                ${uploadInner}
+                            </div>
+                        </div>
+                    `;
+                    break;
             }
         }
 
         function renderAgentThinking(flowType) {
             const app = document.getElementById('app');
+            const claimTriageComplete =
+                selectedScenario === 'deer' ? t('triageClaimCompleteDeer')
+                : selectedScenario === 'vandalism' ? t('triageClaimCompleteVandal')
+                : t('triageClaimComplete');
+
             const labels = flowType === 'policy' ? {
                 a1: t('triageAgent'), a1complete: t('triageComplete'),
                 a2: t('policyReader'), a2complete: t('policyComplete'),
                 a3: t('readyAnalysis'), nextScreen: 3
             } : {
-                a1: t('triageClaim'), a1complete: t('triageClaimComplete'),
+                a1: t('triageClaim'), a1complete: claimTriageComplete,
                 a2: t('claimPrepAgent'), a2complete: t('claimPrepComplete'),
                 a3: t('readyClaim'), nextScreen: 8
             };
