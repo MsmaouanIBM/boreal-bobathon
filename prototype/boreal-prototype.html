@@ -191,6 +191,9 @@
                 scenario2: 'I hit a deer on the highway',
                 scenario3: 'My car was vandalized in a parking lot',
                 claimBack: '← Back',
+                clarifyTitle: 'I want to make sure I understand',
+                clarifyBody: "Your description didn't clearly match my standard scenarios. Pick the closest match below, or hit Back to rephrase.",
+                clarifyDescriptionLabel: 'Your description',
                 // Claim thinking
                 triageClaim: 'Triage Agent: classifying loss type...',
                 triageClaimComplete: 'Collision, English, Ontario',
@@ -299,6 +302,9 @@
                 scenario2: "J'ai heurté un chevreuil sur l'autoroute",
                 scenario3: 'Mon véhicule a été vandalisé dans un stationnement',
                 claimBack: '← Retour',
+                clarifyTitle: "Je veux m'assurer de bien comprendre",
+                clarifyBody: "Votre description ne correspond pas clairement à mes scénarios standards. Choisissez la correspondance la plus proche ci-dessous, ou cliquez sur Retour pour reformuler.",
+                clarifyDescriptionLabel: 'Votre description',
                 triageClaim: 'Agent de triage : classification du sinistre...',
                 triageClaimComplete: 'Collision, français, Ontario',
                 triageClaimCompleteDeer: 'Collision avec un animal, français, Ontario',
@@ -536,17 +542,54 @@
             const textarea = document.getElementById('claim-textarea');
             const text = textarea ? textarea.value.trim() : '';
             claimDescription = text;
+            if (!text) { renderScreen(10); return; }
             const lower = text.toLowerCase();
-            if (lower.includes('deer') || lower.includes('chevreuil') || lower.includes('animal') || lower.includes('moose') || lower.includes('orignal')) {
+
+            const matchAny = (kws) => kws.some(kw => lower.includes(kw));
+
+            // Animal-strike indicators (most specific — check first)
+            const deerKeywords = [
+                'deer', 'doe', 'fawn', 'moose', 'elk', 'animal', 'wildlife',
+                'chevreuil', 'cerf', 'orignal', 'faune', 'biche'
+            ];
+
+            // Rear-end indicators (specific positional / stop-context phrases)
+            const rearEndKeywords = [
+                'rear-end', 'rear end', 'rear ended', 'rear-ended', 'rear collision',
+                'red light', 'stop light', 'stop sign', 'stopped at',
+                'from behind', 'behind me', 'tailgat',
+                'arrière', 'feu rouge', 'arrêté au feu', 'à un feu', "par l'arrière"
+            ];
+
+            // Vandalism indicators (broad — includes typo defense for 'candal')
+            const vandalismKeywords = [
+                'vandal', 'candal', 'vandalis',
+                'keyed', 'scratch',
+                'broke my', 'broke a', 'broken', 'busted',
+                'smash', 'smashed', 'shattered',
+                'rock', 'stone', 'brick', 'thrown',
+                'glass', 'glasses', 'window', 'windshield', 'mirror',
+                'teenager', 'teens', 'kid', 'punks', 'youth',
+                'graffiti', 'spray', 'tagged', 'egg', 'egged', 'paint',
+                // French
+                'vandalisme', 'vandale', 'brisé', 'cassé', 'vitre',
+                'rayé', 'rayures', 'pierre', 'cailloux', 'roche',
+                'peinture', 'œufs', 'ados', 'adolescents', 'jeunes'
+            ];
+
+            if (matchAny(deerKeywords)) {
                 selectedScenario = 'deer';
-            } else if (lower.includes('vandal') || lower.includes('keyed') || lower.includes('vandalis')) {
+                renderScreen(7);
+            } else if (matchAny(rearEndKeywords)) {
+                selectedScenario = 'rear-end';
+                renderScreen(7);
+            } else if (matchAny(vandalismKeywords)) {
                 selectedScenario = 'vandalism';
-            } else if (lower.includes('rear') || lower.includes('arrière') || lower.includes('feu') || lower.includes('red light')) {
-                selectedScenario = 'rear-end';
+                renderScreen(7);
             } else {
-                selectedScenario = 'rear-end';
+                // Ambiguous — honest clarification instead of silent guess
+                renderScreen(10);
             }
-            renderScreen(7);
         }
 
         function resetApp() {
@@ -847,6 +890,29 @@
                             <p class="text-center text-gray-600 mb-8 text-sm leading-relaxed">${t('uploadSubtitle')}</p>
                             <div class="bg-white rounded-2xl shadow-xl p-8">
                                 ${uploadInner}
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 10:
+                    app.innerHTML = `
+                        <div class="max-w-3xl w-full slide-up">
+                            <div class="mb-4">
+                                <button onclick="renderScreen(6)" class="text-sm text-gray-500 hover:text-gray-900">${t('claimBack')}</button>
+                            </div>
+                            <h2 class="text-3xl font-bold text-gray-900 mb-3 text-center">${t('clarifyTitle')}</h2>
+                            <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">${t('clarifyBody')}</p>
+                            ${claimDescription ? `
+                            <div class="bg-white rounded-2xl shadow-md p-6 mb-6 border-l-4" style="border-left-color: #5AB8A8;">
+                                <div class="text-xs uppercase tracking-wide text-gray-500 mb-2">${t('clarifyDescriptionLabel')}</div>
+                                <p class="text-gray-800 italic">\u201C${claimDescription}\u201D</p>
+                            </div>` : ''}
+                            <div class="text-sm text-gray-500 mb-3 text-center">${t('claimScenarioLabel')}</div>
+                            <div class="flex flex-wrap gap-3 justify-center">
+                                <span class="scenario-chip px-4 py-2 rounded-full text-sm" onclick="selectScenario('rear-end')">${t('scenario1')}</span>
+                                <span class="scenario-chip px-4 py-2 rounded-full text-sm" onclick="selectScenario('deer')">${t('scenario2')}</span>
+                                <span class="scenario-chip px-4 py-2 rounded-full text-sm" onclick="selectScenario('vandalism')">${t('scenario3')}</span>
                             </div>
                         </div>
                     `;
