@@ -18,7 +18,7 @@ Bob enabled me, a non-developer business transformation consultant, to ship work
 
 ### 1. Bob in VS Code as a constant companion
 
-Bob's panel was visible an easy It became my default "what should I do next?" surface. I never had to switch to a separate AI chat window or copy-paste context across tools.
+Bob's panel was a constant companion. It became my default 'what should I do next?' surface. I never had to switch to a separate AI chat window or copy-paste context across tools.
 
 
 ### 2. Spec-driven workflow with approval gates
