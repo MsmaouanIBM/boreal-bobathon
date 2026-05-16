@@ -1,7 +1,7 @@
 # Boréal 🌲
 
 > **Your policy. Your gaps. Your claim. In both official languages.**
-
+![Boréal home screen](demo/screen1-home.png)
 A bilingual AI insurance advisor that reads your policy, scores your coverage gaps, and walks you through a claim — in authentic Canadian English or regulatory French.
 
 **IBM Bob-a-thon submission** · Built natively on IBM Bob + Context Studio · TrueNorth AI Team
