@@ -31,7 +31,7 @@ Built and demoed on **Maple Mutual / Jean-Pierre Tremblay** — a fictional Onta
 
 ## Three competitive moats
 
-🇨🇦 **Bilingual moat.** 280+ verified EN/FR regulatory term pairs sourced from the *Manuel du plan statistique automobile* (PSA), GISA / ASAG bulletins, and Ontario Auto Reform documentation. *Avenant FPQ n° 44R. Indemnités d'accident bonifiées. IDDM.* This isn't Google Translate — it's the terminology only an in-domain Canadian P&C practitioner has working access to. Hard to copy. Weeks of work to replicate.
+🇨🇦 **Bilingual moat.** 280+ verified EN/FR regulatory term pairs built from authoritative Canadian P&C regulatory documentation, Ontario Auto Reform materials, and in-domain practitioner experience. *Avenant FPQ n° 44R. Indemnités d'accident bonifiées. IDDM.* This isn't Google Translate — it's the terminology only an in-domain Canadian P&C practitioner has working access to. Hard to copy. Weeks of work to replicate.
 
 🤖 **Genuinely agentic.** Four specialized agents with versioned system prompts, structured outputs, and clean handoffs — not one chatbot pretending to be smart. The **Claim Prep Agent** is the differentiator: most Bob-a-thon submissions stop at summarize-a-document. Boréal goes to the harder problem — *what do I do now, at the scene, with the adjuster on the phone tomorrow?*
 
@@ -92,7 +92,7 @@ Boréal's architecture is **immediately reusable** for Canadian financial servic
 
 ## Why a Canadian P&C practitioner built this
 
-Boréal was built by an IBM Consulting practitioner who works on the **Canadian P&C regulatory reporting program** (the Automobile Statistical Plan / GISA / ASAG). The bilingual terminology framework draws on real ERD / DEC documentation, GISA bulletins (including the 2026-04 and 2026-05 Alberta v4.2 releases), and the PSA Manuel du plan statistique — sources only an in-domain practitioner has working access to.
+Boréal was built by an IBM Consulting practitioner with **13+ years of cross-sector Canadian P&C experience**, including national-scale regulatory data quality and bilingual reporting work for major Canadian insurers. The bilingual terminology framework draws on authoritative Canadian regulatory documentation, Ontario Auto Reform materials, and in-domain practitioner knowledge that's hard to assemble from outside the industry.
 
 This isn't a generic LLM demo dressed in maple leaves. It's an authentic Canadian insurance product spec, built by someone who lives in the regulatory world it serves.
 

@@ -70,7 +70,7 @@ These are the four system prompts that make Boréal work. Each is a complete, ve
 
 - **Persona:** warm, knowledgeable, plain-speaking, never paternalistic
 - **Provincial regulatory framework:** Ontario auto policy structure (OAP-1), OPCF endorsement codes, mandatory vs. optional coverages
-- **Bilingual terminology framework:** ~280 verified EN ↔ FR term pairs sourced from real GISA / ASAG bulletins, the PSA *Manuel du plan statistique automobile*, ERD / DEC documentation, and Ontario Auto Reform materials
+- **Bilingual terminology framework:** ~280 verified EN ↔ FR term pairs drawn from authoritative Canadian P&C regulatory documentation and Ontario Auto Reform materials
 - **Tone and disclaimer rules:** every advisory response ends with the standard "educational guidance only" disclaimer
 - **Hard guardrails:** the three things Boréal will never do — quote prices, give legal advice, bind a policy
 

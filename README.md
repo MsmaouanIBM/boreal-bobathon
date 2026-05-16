@@ -21,7 +21,7 @@ Both flows are end-to-end bilingual — built on a 280+ term EN/FR regulatory te
 
 ## The 30-second pitch
 
-- 🇨🇦 **Bilingual moat** — authentic Canadian regulatory French (*Avenant FPQ n° 44R, Indemnités d'accident bonifiées, IDDM*), sourced from real ERD / DEC documentation and GISA / ASAG bulletins. Not Google Translate.
+- 🇨🇦 **Bilingual moat** — authentic Canadian regulatory French (*Avenant FPQ n° 44R, Indemnités d'accident bonifiées, IDDM*), built from in-domain Canadian P&C regulatory documentation. Not Google Translate.
 - 🤖 **Genuinely agentic** — 4 coordinated agents (Triage → Policy Reader / Coverage Advisor / Claim Prep) with versioned system prompts, structured YAML handoffs, and explicit hard rules. Not one chatbot.
 - 🎯 **Two complete flows** — most submissions stop at *summarize this document*. Boréal goes to *what do I do now, at the scene of an accident, at midnight?*
 - 🧭 **Calibrated honesty** — when input is ambiguous, Boréal asks for clarification instead of guessing. When Ontario's fault rules contain edge cases (swerved-vs-impacted in an animal strike), Boréal flags the caveat explicitly.
@@ -99,7 +99,7 @@ Hard scope boundaries are non-negotiable: **Ontario auto, English + French, no p
 The `context/context-studio-config.md` defines:
 - Persona (warm, knowledgeable, plain-speaking, never paternalistic)
 - Provincial regulatory framework (Ontario auto policy structure, OAP-1, OPCF endorsement codes)
-- Bilingual terminology framework (~280 verified term pairs sourced from real GISA / ASAG documentation)
+- Bilingual terminology framework (~280 verified term pairs drawn from authoritative Canadian P&C regulatory sources)
 - Tone and disclaimer rules (every advisory response ends with the educational-guidance disclaimer)
 - Hard guardrails (the things Boréal will never do)
 
@@ -166,7 +166,7 @@ Boréal's architecture is **immediately reusable** across Canadian financial ser
 
 ## Why a Canadian P&C practitioner built this
 
-Boréal was built by an IBM Consulting practitioner who works on the **Canadian P&C regulatory reporting program** — the Automobile Statistical Plan (PSA / ASP), administered by GISA / ASAG. The bilingual terminology framework draws on real ERD / DEC (*Document des exigences de contrôle*) documentation, GISA bulletins (including the 2026-04 and 2026-05 Alberta v4.2 releases), and the PSA *Manuel du plan statistique automobile* — sources only an in-domain practitioner has working access to.
+Boréal was built by an IBM Consulting practitioner with **13+ years of cross-sector Canadian P&C experience**, including national-scale regulatory data quality and bilingual reporting work for major Canadian insurers. The bilingual terminology framework draws on authoritative Canadian regulatory documentation, Ontario Auto Reform materials, and in-domain practitioner knowledge.
 
 This isn't a generic LLM demo dressed in maple leaves. It's an authentic Canadian insurance product spec, built by someone who lives in the regulatory world it serves.
 
